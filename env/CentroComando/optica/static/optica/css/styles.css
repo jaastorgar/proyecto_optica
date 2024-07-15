@@ -246,3 +246,65 @@ nav ul li a:hover {
 .search-bar button:hover {
     color: var(--color-accent);
 }
+
+
+/* Productos */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-card h3 {
+    font-size: 1.2em;
+    margin: 10px;
+}
+
+.product-card p {
+    font-size: 0.9em;
+    margin: 10px;
+    color: #666;
+}
+
+.product-card .price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--color-primary);
+    margin: 10px;
+}
+
+.product-card .btn {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.product-card .btn:hover {
+    background-color: var(--color-accent);
+}

@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='cliente',
+            name='Cliente',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('rut', models.IntegerField(validators=[django.core.validators.MinValueValidator(1000000), django.core.validators.MaxValueValidator(99999999)])),

@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 
 # Create your models here.
-class cliente(models.Model):
+class Cliente(models.Model):
     rut = models.IntegerField(
         validators=[
             MinValueValidator(1000000),
