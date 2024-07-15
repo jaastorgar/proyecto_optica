@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'optica/css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Mitiz Vision - Cuidando tu vista</title>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{% static 'optica/images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
+        </div>
+        <nav class="sidebar">
+            <form class="search-bar">
+                <input type="text" placeholder="Buscar productos..." aria-label="Buscar">
+                <button type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+            <ul>
+                <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="#armazones"><i class="fas fa-glasses"></i> Ventas de armazones</a></li>
+                <li><a href="#reparaciones"><i class="fas fa-tools"></i> Reparaciones</a></li>
+                <li><a href="#"><i class="far fa-calendar-alt"></i> Agendar Hora</a></li>
+                <li><a href="#"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a></li>
+                <li><a href="#"><i class="fas fa-truck"></i> Seguir Pedido</a></li>
+                <li><a href="#" id="carrito"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="" alt="Slide 1">
+            </div>
+            <div class="carousel-item">
+                <img src="" alt="Slide 2">
+            </div>
+            <div class="carousel-item">
+                <img src="" alt="Slide 3">
+            </div>
+        </div>
+        <button class="carousel-control prev">&#10094;</button>
+        <button class="carousel-control next">&#10095;</button>
+    </div>
+    
+    <main>
+        <section id="hero">
+            <h1>Bienvenido a Mitiz Vision</h1>
+            <p>Cuidamos tu salud visual con los mejores productos y servicios ópticos.</p>
+        </section>
+        <section id="armazones">
+            <h2>Nuestros Armazones</h2>
+            <div class="product-grid">
+                <!-- Aquí irían los productos -->
+            </div>
+        </section>
+        <section id="sobre-nosotros">
+            <h2>Sobre Nosotros</h2>
+            <p>En Mitiz Vision, nos dedicamos a cuidar la salud visual de nuestros clientes con productos de alta calidad y servicios personalizados. Con años de experiencia en el campo de la óptica, nuestro equipo de profesionales está comprometido con proporcionar la mejor atención y soluciones para todas sus necesidades visuales.</p>
+        </section>        
+        <section id="reparaciones">
+            <h2>Servicio de Reparaciones</h2>
+            <p>Ofrecemos reparaciones profesionales para tus armazones. Contáctanos para más información.</p>
+        </section>
+        <section id="reconocimientos">
+            <h2>Lo que dicen nuestros clientes</h2>
+            <div class="testimonios">
+                <div class="testimonio">
+                    <img src="" alt="María G." class="usuario-foto">
+                    <p>"Excelente servicio y productos de calidad. Muy recomendado."</p>
+                    <span class="autor">- María G.</span>
+                </div>
+                <div class="testimonio">
+                    <img src="" alt="Juan P." class="usuario-foto">
+                    <p>"Los mejores lentes que he tenido. El personal es muy amable y profesional."</p>
+                    <span class="autor">- Juan P.</span>
+                </div>
+                <div class="testimonio">
+                    <img src="" alt="Ana R." class="usuario-foto">
+                    <p>"Siempre encuentro lo que busco en Mitiz Vision. ¡Gracias por su atención!"</p>
+                    <span class="autor">- Ana R.</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-section">
+            <h3>Dirección</h3>
+            <img src="" alt="Mapa de ubicación" class="mapa-ubicacion">
+            <p>Av. Principal 123, Ciudad, País</p>
+            <p>Teléfono: (123) 456-7890</p>
+        </div>     
+        <p>&copy; 2024 Mitiz Vision. Todos los derechos reservados.</p>
+    </footer>
+    <script src="{% static 'optica/js/script.js' %}"></script>
+</body>
+</html>
