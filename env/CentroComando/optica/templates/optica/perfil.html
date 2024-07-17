@@ -1,17 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'optica/css/styles.css' %}">
+    <title>Perfil - Mitiz Vision</title>
 </head>
 <body>
-    {% block content %}
-    <div class="perfil-container">
-        <h2>Perfil de {{ user.first_name }} {{ user.last_name }}</h2>
+    <div class="form-container">
+        <div class="form-header">
+            <img src="{% static 'optica/images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
+            <h2>Perfil de {{ user.first_name }} {{ user.last_name }}</h2>
+        </div>
         <p>Email: {{ user.email }}</p>
         <a href="{% url 'logout' %}" class="btn">Cerrar Sesión</a>
     </div>
-    {% endblock %}
 </body>
 </html>

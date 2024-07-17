@@ -1,14 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'optica/css/styles.css' %}">
+    <title>Iniciar Sesión - Mitiz Vision</title>
 </head>
 <body>
-    {% block content %}
-    <div class="login-container">
-        <h2>Iniciar Sesión</h2>
+    <div class="form-container">
+        <div class="form-header">
+            <img src="{% static 'optica/images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
+            <h2>Iniciar Sesión</h2>
+        </div>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
@@ -16,6 +20,5 @@
         </form>
         <p>¿No tienes una cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>
     </div>
-    {% endblock %}
 </body>
 </html>
