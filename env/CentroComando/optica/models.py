@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
+from django.utils import timezone
 
 # Create your models here.
 class Cliente(models.Model):
@@ -48,3 +49,23 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.codigo
+
+
+class Cita(models.Model):
+    ESTADO_CHOICES = [
+        ('pendiente', 'Pendiente'),
+        ('confirmada', 'Confirmada'),
+        ('cancelada', 'Cancelada'),
+    ]
+
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
+    nombre = models.CharField(max_length=100)
+    email = models.EmailField()
+    telefono = models.CharField(max_length=15)
+    fecha_hora = models.DateTimeField()
+    motivo = models.TextField()
+    estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='pendiente')
+    fecha_solicitud = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Cita de {self.nombre} para {self.fecha_hora}"
