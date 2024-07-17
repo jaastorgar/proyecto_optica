@@ -31,21 +31,29 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <h1>Venta de Armazones</h1>
-        <div class="product-grid">
+    <div class="container">
+        <aside class="filtros">
+            <h2>Filtros</h2>
+            <!-- Aquí irán los filtros -->
+        </aside>
+        <main class="galeria-armazones">
             {% for producto in productos %}
-            <div class="product-card">
-                <img src="{{ producto.imagen.url }}" alt="{{ producto.armazoncarac }}">
-                <h3>{{ producto.armazoncarac }}</h3>
-                <p>{{ producto.descripcion }}</p>
-                <span class="price">${{ producto.precio }}</span>
-                <button class="btn" data-product-id="{{ producto.id }}">Añadir al carrito</button>
+            <div class="armazon-item">
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.armazon }}">
+                <div class="armazon-info">
+                    <h3>{{ producto.armazon }}</h3>
+                    <p>{{ producto.marca }}</p>
+                    <span class="precio">${{ producto.precio }}</span>
+                    <button class="vista-rapida" data-producto-id="{{ producto.codigo }}">Vista Rápida</button>
+                </div>
             </div>
             {% endfor %}
-        </div>
-    </main>
-
+        </main>
+    </div>
+    <div id="modal-vista-rapida" class="modal">
+        <!-- Aquí irá el contenido del modal -->
+    </div>
+    <script src="{% static 'optica/js/script.js' %}"></script>
     <footer>
         <p>&copy; 2024 Mitiz Vision. Todos los derechos reservados.</p>
     </footer>

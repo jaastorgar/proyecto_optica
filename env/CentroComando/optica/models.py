@@ -31,21 +31,20 @@ class Cliente(models.Model):
     def rut_completo(self):
         return f"{self.rut}-{self.dv}"
 
-class User(models.Model):
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.username
 
 class Producto(models.Model):
-    codigo = models.CharField(max_length=10)
-    armazoncarac = models.CharField(max_length=100)
-    descripcion = models.TextField()
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
-    stock = models.IntegerField(default=0)
+    codigo = models.CharField(max_length=10, primary_key=True, null=False)
+    armazon = models.CharField(max_length=50, null=False)
+    caracteristica = models.TextField(max_length=1000, null=False)
+    precio = models.IntegerField(null=False)
+    stock = models.IntegerField(null=False)
     imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
-    categoria = models.CharField(max_length=50)
+    categoria = models.CharField(max_length=50, null=False)
+    marca = models.CharField(max_length=50, null=False)
+    genero = models.CharField(max_length=20, null=False)
+    forma_marco = models.CharField(max_length=50, null=False)
+    color_armazon = models.CharField(max_length=50, null=False)
+    color_cristal = models.CharField(max_length=50, null=False)
 
     def __str__(self):
         return self.codigo
