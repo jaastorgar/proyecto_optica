@@ -23,7 +23,7 @@ def crear_cita(request):
         form = CitaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('cita_exitosa')
+            return redirect('home')
     else:
         form = CitaForm()
     return render(request, 'optica/citas.html', {'form': form})
