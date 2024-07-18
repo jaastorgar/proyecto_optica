@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'optica/css/styles.css' %}">
-    <title>Registro - Mitiz Vision</title>
+    <title>Registro - MatizVision</title>
 </head>
 <body>
     <div class="form-container">
@@ -15,7 +15,8 @@
         </div>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ user_form.as_p }}
+            {{ cliente_form.as_p }}
             <button type="submit" class="btn-submit">Registrarse</button>
         </form>
         <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>

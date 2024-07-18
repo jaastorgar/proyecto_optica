@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'optica/css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>MatizVision - Agendar Cita</title>
+    <title>Productos - MatizVision</title>
 </head>
 <body>
     <header>
@@ -23,7 +23,7 @@
             <ul>
                 <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Inicio</a></li>
                 <li><a href="{% url 'productos' %}"><i class="fas fa-glasses"></i> Ventas de armazones</a></li>
-                <li><a href=""><i class="fas fa-tools"></i> Reparaciones</a></li>
+                <li><a href="#"><i class="fas fa-tools"></i> Reparaciones</a></li>
                 <li><a href="{% url 'cita' %}"><i class="far fa-calendar-alt"></i> Agendar Hora</a></li>
                 {% if user.is_authenticated %}
                 <li class="dropdown">
@@ -43,36 +43,22 @@
         </nav>
     </header>
     <main>
-        <div class="cita-container">
-            <h2>Solicitar una Cita</h2>
-            <form id="cita-form" class="cita-form" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="nombre">Nombre completo</label>
-                    <input type="text" id="nombre" name="nombre" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" id="telefono" name="telefono" required>
-                </div>
-                <div class="form-group">
-                    <label for="fecha_hora">Fecha y hora preferida</label>
-                    <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
-                </div>
-                <div class="form-group">
-                    <label for="motivo">Motivo de la consulta</label>
-                    <textarea id="motivo" name="motivo" required></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Solicitar Cita</button>
-            </form>
+        <h1>Productos</h1>
+        <div class="product-grid">
+            {% for producto in productos %}
+            <div class="product-card">
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.armazon }}">
+                <h3>{{ producto.armazon }}</h3>
+                <p>{{ producto.caracteristica }}</p>
+                <span class="price">${{ producto.precio }}</span>
+                <button class="btn" data-product-id="{{ producto.codigo }}">Añadir al carrito</button>
+            </div>
+            {% endfor %}
         </div>
     </main>
     <footer>
         <p>&copy; 2024 Mitiz Vision. Todos los derechos reservados.</p>
     </footer>
+    <script src="{% static 'optica/js/script.js' %}"></script>
 </body>
 </html>

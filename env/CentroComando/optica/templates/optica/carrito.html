@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'optica/css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>MatizVision - Agendar Cita</title>
+    <title>Carrito de Compras - MatizVision</title>
 </head>
 <body>
     <header>
@@ -43,32 +44,24 @@
         </nav>
     </header>
     <main>
-        <div class="cita-container">
-            <h2>Solicitar una Cita</h2>
-            <form id="cita-form" class="cita-form" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="nombre">Nombre completo</label>
-                    <input type="text" id="nombre" name="nombre" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" id="telefono" name="telefono" required>
-                </div>
-                <div class="form-group">
-                    <label for="fecha_hora">Fecha y hora preferida</label>
-                    <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
-                </div>
-                <div class="form-group">
-                    <label for="motivo">Motivo de la consulta</label>
-                    <textarea id="motivo" name="motivo" required></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Solicitar Cita</button>
-            </form>
+        <h1>Carrito de Compras</h1>
+        <div class="cart-details">
+            {% if productos %}
+            <ul>
+                {% for producto in productos %}
+                <li>
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.armazon }}">
+                    <span>{{ producto.armazon }}</span>
+                    <span>${{ producto.precio }}</span>
+                    <span>Cantidad: {{ request.session.carrito|get_item:producto.codigo }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <h2>Total: ${{ total }}</h2>
+            <a href="{% url 'checkout' %}" class="btn">Proceder al Pago</a>
+            {% else %}
+            <p>Tu carrito está vacío.</p>
+            {% endif %}
         </div>
     </main>
     <footer>

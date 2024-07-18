@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'optica/css/styles.css' %}">
-    <title>Iniciar Sesión - Mitiz Vision</title>
+    <title>Iniciar Sesión - MatizVision</title>
 </head>
 <body>
     <div class="form-container">
@@ -18,7 +18,7 @@
             {{ form.as_p }}
             <button type="submit" class="btn-submit">Iniciar Sesión</button>
         </form>
-        <p>¿No tienes una cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>
+        <p>¿No tienes una cuenta? <a href="{% url 'registro_cliente' %}">Regístrate aquí</a></p>
     </div>
 </body>
 </html>

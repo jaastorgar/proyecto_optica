@@ -41,11 +41,6 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
-AUTH_USER_MODEL = 'optica.CustomUser'
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'perfil'
-LOGOUT_REDIRECT_URL = 'home'
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
