@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Producto, Cliente, CustomUser
+from .models import Producto, Cliente, Cita
 from .forms import CitaForm, ClienteForm, CustomPasswordResetForm
 from django.contrib.auth import authenticate, login, logout
 from .forms import RegistroForm, LoginForm
@@ -27,11 +27,16 @@ def crear_cita(request):
     if request.method == 'POST':
         form = CitaForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            cita = form.save(commit=False)
+            if request.user.is_authenticated:
+                cita.cliente = request.user.cliente
+            cita.save()
+            return redirect('mis_citas')
     else:
         form = CitaForm()
     return render(request, 'optica/citas.html', {'form': form})
+
+
 
 def registro_cliente(request):
     if request.method == 'POST':
@@ -89,6 +94,11 @@ def actualizar_perfil(request):
         messages.success(request, 'Perfil actualizado exitosamente.')
         return redirect('login')
     return render(request, 'optica/perfil.html')
+
+@login_required
+def mis_citas(request):
+    citas = Cita.objects.filter(cliente__user=request.user).order_by('-fecha_hora')
+    return render(request, 'optica/mis_citas.html', {'citas': citas})
 
 @login_required
 def cerrar_sesion(request):

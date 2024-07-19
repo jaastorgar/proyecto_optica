@@ -66,7 +66,7 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.rut
+        return self.nombre
 
 
 class Producto(models.Model):
@@ -94,7 +94,7 @@ class Cita(models.Model):
         ('cancelada', 'Cancelada'),
     ]
 
-    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='citas', null=True, blank=True)
     nombre = models.CharField(max_length=100)
     email = models.EmailField()
     telefono = models.CharField(max_length=15)

@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Citas - Mitiz Vision</title>
+    <link rel="stylesheet" href="{% static 'optica/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{% static 'optica/images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
+        </div>
+        <h1>MatizVision</h1>
+        <nav>
+            <a href="{% url 'home' %}" class="btn btn-primary">Inicio</a>
+        </nav>
+    </header>
+    <main class="container">
+        <h2>Mis Citas</h2>
+        {% if citas %}
+            <ul class="citas-list">
+            {% for cita in citas %}
+                <li class="cita-item">
+                    <strong>Fecha:</strong> {{ cita.fecha_hora }}<br>
+                    <strong>Motivo:</strong> {{ cita.motivo }}<br>
+                    <strong>Estado:</strong> {{ cita.estado }}
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No tienes citas programadas.</p>
+        {% endif %}
+    </main>
+    <script src="{% static 'optica/js/script.js' %}"></script>
+</body>
+</html>
