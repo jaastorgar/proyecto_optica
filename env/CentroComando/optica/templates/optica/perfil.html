@@ -23,38 +23,41 @@
             <p><strong>Teléfono:</strong> {{ user.cliente.telefono }}</p>
         </section>
 
-        <section class="update-profile">
-            <h2>Actualizar Información</h2>
-            <form method="post" action="{% url 'actualizar_perfil' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="email">Correo electrónico:</label>
-                    <input type="email" id="email" name="email" value="{{ user.email }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="rut">RUT:</label>
-                    <input type="text" id="rut" name="rut" value="{{ user.cliente.rut }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="dv">Dígito Verificador:</label>
-                    <input type="text" id="dv" name="dv" value="{{ user.cliente.dv }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" value="{{ user.cliente.nombre }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="apellido">Apellido:</label>
-                    <input type="text" id="apellido" name="apellido" value="{{ user.cliente.apellido }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="telefono">Teléfono:</label>
-                    <input type="text" id="telefono" name="telefono" value="{{ user.cliente.telefono }}" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
-            </form>
-        </section>
+        <button id="toggleUpdateProfileForm" method="POST" data-action="toggle-profile" class="btn btn-primary">Actualizar Información</button>
 
+        <div id="updateFormSection" style="display: none;">
+            <section class="update-profile">
+                <h2>Actualizar Información</h2>
+                <form method="post" action="{% url 'actualizar_perfil' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="email">Correo electrónico:</label>
+                        <input type="email" id="email" name="email" value="{{ user.email }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rut">RUT:</label>
+                        <input type="text" id="rut" name="rut" value="{{ user.cliente.rut }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dv">Dígito Verificador:</label>
+                        <input type="text" id="dv" name="dv" value="{{ user.cliente.dv }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" value="{{ user.cliente.nombre }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" value="{{ user.cliente.apellido }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="text" id="telefono" name="telefono" value="{{ user.cliente.telefono }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+                </form>
+            </section>
+        </div>    
         <section class="order-history">
             <h2>Historial de Pedidos</h2>
             <table class="table">
@@ -85,5 +88,6 @@
     </div>
 </div>
 {% endblock %}
+<script src="{% static 'optica/js/script.js' %}"></script>
 </body>
 </html>
