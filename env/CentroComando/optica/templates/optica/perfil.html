@@ -8,46 +8,80 @@
     <title>Perfil - MatizVision</title>
 </head>
 <body>
-    <main>
-        <div class="profile-container">
-            <div class="profile-header">
-                <h1>Perfil de {{ user.username }}</h1>
-                <p>Nombre: {{ user.first_name }} {{ user.last_name }}</p>
-                <p>Email: {{ user.email }}</p>
-                <p>Teléfono: {{ user.cliente.telefono }}</p>
-                <p>Dirección: {{ user.cliente.direccion }}</p>
-            </div>
-            <div class="profile-update">
-                <h2>Actualizar Información</h2>
-                <form method="post" action="{% url 'actualizar_perfil' %}">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="first_name">Nombre:</label>
-                        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="last_name">Apellido:</label>
-                        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" value="{{ user.email }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="telefono">Teléfono:</label>
-                        <input type="tel" id="telefono" name="telefono" value="{{ user.cliente.telefono }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="direccion">Dirección:</label>
-                        <input type="text" id="direccion" name="direccion" value="{{ user.cliente.direccion }}" required>
-                    </div>
-                    <button type="submit" class="btn-submit">Actualizar</button>
-                </form>
-            </div>
-            <div class="logout-button">
-                <a href="{% url 'logout' %}" class="btn-logout">Cerrar Sesión</a>
-            </div>
-        </div>
-    </main>
+{% block content %}
+<div class="profile-container">
+    <h1>Perfil de {{ user.get_full_name }}</h1>
+    
+    <div class="profile-sections">
+        <section class="personal-info">
+            <h2>Información Personal</h2>
+            <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>RUT:</strong> {{ user.cliente.rut_completo }}</p>
+            <p><strong>Teléfono:</strong> {{ user.cliente.telefono }}</p>
+        </section>
+
+        <section class="update-profile">
+            <h2>Actualizar Información</h2>
+            <form method="post" action="{% url 'actualizar_perfil' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="rut">RUT:</label>
+                    <input type="text" id="rut" name="rut" value="{{ user.cliente.rut }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="dv">Dígito Verificador:</label>
+                    <input type="text" id="dv" name="dv" value="{{ user.cliente.dv }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="{{ user.cliente.nombre }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" value="{{ user.cliente.apellido }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" value="{{ user.cliente.telefono }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+            </form>
+        </section>
+
+        <section class="order-history">
+            <h2>Historial de Pedidos</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Número de Pedido</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí irían los pedidos del usuario -->
+                </tbody>
+            </table>
+        </section>
+
+        <section class="appointments">
+            <h2>Mis Citas</h2>
+            <ul class="appointment-list">
+                <!-- Aquí irían las citas del usuario -->
+            </ul>
+        </section>
+    </div>
+
+    <div class="logout-button">
+        <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar Sesión</a>
+    </div>
+</div>
+{% endblock %}
 </body>
 </html>

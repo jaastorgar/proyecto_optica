@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -53,6 +54,18 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'CentroComando.urls'
 
+AUTH_USER_MODEL = 'optica.CustomUser'
+
+LOGIN_URL = 'login'  # Nombre de la URL de inicio de sesión
+
+LOGIN_REDIRECT_URL = 'home'  # URL a la que se redirige después de iniciar sesión
+
+LOGOUT_REDIRECT_URL = 'home'  # URL a la que se redirige después de cerrar sesión
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -85,8 +98,6 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

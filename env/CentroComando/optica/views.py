@@ -1,20 +1,18 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .models import Producto
-from rest_framework.renderers import JSONRenderer
-from .serializer import ProductoSerializer
-from .forms import CitaForm, ClienteForm
+from django.contrib.auth.decorators import login_required
+from .models import Producto, Cliente, CustomUser
+from .forms import CitaForm, ClienteForm, CustomPasswordResetForm
 from django.contrib.auth import authenticate, login, logout
 from .forms import RegistroForm, LoginForm
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User
 import json
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.urls import reverse_lazy
 
 # Create your views here.
 def home(request):
     return render(request, 'optica/home.html')
-
 
 def productos_view(request):
     query = request.GET.get('q')
@@ -23,7 +21,6 @@ def productos_view(request):
     else:
         productos = Producto.objects.all()
     return render(request, 'optica/productos.html', {'productos': productos})
-
 
 def crear_cita(request):
     if request.method == 'POST':
@@ -34,7 +31,6 @@ def crear_cita(request):
     else:
         form = CitaForm()
     return render(request, 'optica/citas.html', {'form': form})
-
 
 def registro_cliente(request):
     if request.method == 'POST':
@@ -79,22 +75,25 @@ def actualizar_perfil(request):
         user.email = request.POST['email']
         user.save()
 
-        cliente = user.cliente
-        cliente.rut = request.POST['rut']
-        cliente.nombre = request.POST['nombre']
-        cliente.apellido = request.POST['apellido']
-        cliente.telefono = request.POST['telefono']
-        cliente.direccion = request.POST['direccion']
-        cliente.save()
+        rut = request.POST.get('rut')
+        if rut:
+            cliente, created = Cliente.objects.get_or_create(user=user, defaults={'rut': rut})
+            cliente.dv = request.POST.get('dv')
+            cliente.nombre = request.POST.get('nombre')
+            cliente.apellido = request.POST.get('apellido')
+            cliente.telefono = request.POST.get('telefono')
+            cliente.save()
+        else:
+            # Maneja el caso donde no se proporciona 'rut'
+            return render(request, 'optica/perfil.html', {'error': 'El RUT es obligatorio'})
 
-        return redirect('perfil')
+        return redirect('login')
     return render(request, 'optica/perfil.html')
 
 @login_required
 def cerrar_sesion(request):
     logout(request)
     return redirect('home')
-
 
 def carrito_view(request):
     carrito = request.session.get('carrito', {})
@@ -119,3 +118,18 @@ def add_to_cart(request):
         request.session['carrito'] = carrito
         return JsonResponse({'message': 'Producto añadido al carrito'})
     return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'optica/password_reset.html'
+    form_class = CustomPasswordResetForm
+    success_url = reverse_lazy('password_reset_done')
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'optica/password_reset_done.html'
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'optica/password_reset_confirm.html'
+    success_url = reverse_lazy('password_reset_complete')
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'optica/password_reset_complete.html'
