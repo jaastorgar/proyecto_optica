@@ -9,15 +9,17 @@
 </head>
 <body>
 {% block content %}
+{% include 'optica/messages.html' %}
 <div class="profile-container">
     <h1>Perfil de {{ user.get_full_name }}</h1>
     
     <div class="profile-sections">
         <section class="personal-info">
             <h2>Información Personal</h2>
-            <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+            <p><strong>Nombre:</strong> {{ user.cliente.nombre }}</p>
+            <p><strong>Apellido:</strong> {{ user.cliente.apellido }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>RUT:</strong> {{ user.cliente.rut_completo }}</p>
+            <p><strong>RUT:</strong> {{ user.cliente.rut }} - {{ user.cliente.dv }}</p>
             <p><strong>Teléfono:</strong> {{ user.cliente.telefono }}</p>
         </section>
 

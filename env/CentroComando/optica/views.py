@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -73,20 +74,19 @@ def actualizar_perfil(request):
     if request.method == 'POST':
         user = request.user
         user.email = request.POST['email']
+        user.first_name = request.POST['nombre']
+        user.last_name = request.POST['apellido']
         user.save()
 
-        rut = request.POST.get('rut')
-        if rut:
-            cliente, created = Cliente.objects.get_or_create(user=user, defaults={'rut': rut})
-            cliente.dv = request.POST.get('dv')
-            cliente.nombre = request.POST.get('nombre')
-            cliente.apellido = request.POST.get('apellido')
-            cliente.telefono = request.POST.get('telefono')
-            cliente.save()
-        else:
-            # Maneja el caso donde no se proporciona 'rut'
-            return render(request, 'optica/perfil.html', {'error': 'El RUT es obligatorio'})
+        cliente, created = Cliente.objects.get_or_create(user=user)
+        cliente.rut = request.POST.get('rut')
+        cliente.dv = request.POST.get('dv')
+        cliente.nombre = request.POST.get('nombre')
+        cliente.apellido = request.POST.get('apellido')
+        cliente.telefono = request.POST.get('telefono')
+        cliente.save()
 
+        messages.success(request, 'Perfil actualizado exitosamente.')
         return redirect('login')
     return render(request, 'optica/perfil.html')
 
