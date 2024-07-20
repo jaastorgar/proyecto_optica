@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'optica',
     'rest_framework',
+    'static',
 ]
 
 MIDDLEWARE = [
