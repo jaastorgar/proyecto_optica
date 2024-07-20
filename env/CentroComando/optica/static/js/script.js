@@ -137,10 +137,12 @@ const testimoniosModule = (function() {
 // Módulo del carrito de compras
 const cartModule = (function() {
     function init() {
-        const addToCartUrl = document.getElementById('add-to-cart-url').value;
-
         document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', () => addToCart(button, addToCartUrl));
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                const addToCartUrl = document.getElementById('add-to-cart-url').value;
+                addToCart(this, addToCartUrl);
+            });
         });
     }
 
@@ -273,7 +275,10 @@ const quickViewModule = (function() {
 
     function setupEventListeners() {
         document.querySelectorAll('.view-quick').forEach(button => {
-            button.addEventListener('click', handleQuickViewClick);
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                openQuickView(productId);
+            });
         });
 
         closeModal.onclick = closeQuickView;
@@ -365,9 +370,11 @@ const productModule = (function() {
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded');
     carouselModule.init();
     testimoniosModule.init();
     cartModule.init();
     productFilterModule.init();
     quickViewModule.init();
+    productModule.init();
 });
