@@ -63,7 +63,10 @@ def iniciar_sesion(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                if user.is_customer:
+                    return redirect('perfil')
+                else:
+                    return redirect('admin:index')
             else:
                 form.add_error(None, 'Correo electrónico o contraseña incorrectos')
     else:
