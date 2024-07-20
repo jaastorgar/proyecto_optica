@@ -32,7 +32,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active')}
+            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active', 'is_customer')}
         ),
     )
     search_fields = ('email',)
@@ -40,4 +40,6 @@ class CustomUserAdmin(UserAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
         return qs.filter(is_customer=False)

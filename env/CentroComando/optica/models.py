@@ -76,7 +76,7 @@ class Producto(models.Model):
     caracteristica = models.TextField(max_length=1000, null=False)
     precio = models.IntegerField(null=False)
     stock = models.IntegerField(null=False)
-    imagen = models.ImageField(upload_to='optica/images', blank=True, null=True)
+    imagen = models.ImageField(upload_to='static/images', blank=True, null=True)
     categoria = models.CharField(max_length=50, null=False)
     marca = models.CharField(max_length=50, null=False)
     genero = models.CharField(max_length=20, null=False)

@@ -64,7 +64,7 @@ def iniciar_sesion(request):
             if user is not None:
                 login(request, user)
                 if user.is_customer:
-                    return redirect('perfil')
+                    return redirect('home')
                 else:
                     return redirect('admin:index')
             else:

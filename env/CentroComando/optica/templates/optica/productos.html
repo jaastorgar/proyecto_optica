@@ -43,20 +43,75 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <h1>Productos</h1>
-        <div class="product-grid">
-            {% for producto in productos %}
-            <div class="product-card">
-                <img src="{{ producto.imagen.url }}" alt="{{ producto.armazon }}">
-                <h3>{{ producto.armazon }}</h3>
-                <p>{{ producto.caracteristica }}</p>
-                <span class="price">${{ producto.precio }}</span>
-                <button class="btn" data-product-id="{{ producto.codigo }}">Añadir al carrito</button>
+    <main class="products-container">
+        <aside class="filters-sidebar">
+            <h2>Filtros</h2>
+            <form id="filter-form">
+                <div class="filter-group">
+                    <h3>Categoría</h3>
+                    <select name="categoria" id="categoria">
+                        <option value="">Todas</option>
+                        <option value="armazon">Armazones</option>
+                        <option value="lentes">Lentes de contacto</option>
+                        <!-- Añadir más opciones según tus categorías -->
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <h3>Marca</h3>
+                    <select name="marca" id="marca">
+                        <option value="">Todas</option>
+                        <!-- Añadir opciones de marcas dinámicamente desde la base de datos -->
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <h3>Rango de precio</h3>
+                    <input type="number" name="precio_min" id="precio_min" placeholder="Mínimo">
+                    <input type="number" name="precio_max" id="precio_max" placeholder="Máximo">
+                </div>
+                <div class="filter-group">
+                    <h3>Género</h3>
+                    <select name="genero" id="genero">
+                        <option value="">Todos</option>
+                        <option value="hombre">Hombre</option>
+                        <option value="mujer">Mujer</option>
+                        <option value="unisex">Unisex</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-filter">Aplicar filtros</button>
+                <button type="reset" class="btn-clear">Limpiar filtros</button>
+            </form>
+        </aside>
+        
+        <section class="products-grid">
+            <div class="sort-options">
+                <select id="sort-select">
+                    <option value="price-asc">Precio: Menor a Mayor</option>
+                    <option value="price-desc">Precio: Mayor a Menor</option>
+                    <option value="name-asc">Nombre: A-Z</option>
+                    <option value="name-desc">Nombre: Z-A</option>
+                </select>
             </div>
-            {% endfor %}
-        </div>
+            
+            <div id="products-list" class="product-grid">
+                {% for producto in productos %}
+                <div class="product-card" data-category="{{ producto.categoria }}" data-price="{{ producto.precio }}">
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.armazon }}">
+                    <h3>{{ producto.armazon }}</h3>
+                    <p>{{ producto.caracteristica }}</p>
+                    <span class="price">${{ producto.precio }}</span>
+                    <button class="btn view-quick" data-product-id="{{ producto.codigo }}">Vista rápida</button>
+                    <button class="btn add-to-cart" data-product-id="{{ producto.codigo }}">Añadir al carrito</button>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
     </main>
+    <div id="quick-view-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="quick-view-content"></div>
+        </div>
+    </div>
     <footer>
         <p>&copy; 2024 Mitiz Vision. Todos los derechos reservados.</p>
     </footer>
