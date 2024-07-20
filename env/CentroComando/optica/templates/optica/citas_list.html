@@ -1,0 +1,13 @@
+{% if citas %}
+    <ul class="citas-list">
+    {% for cita in citas %}
+        <li class="cita-item">
+            <strong>Fecha:</strong> {{ cita.fecha_hora }}<br>
+            <strong>Motivo:</strong> {{ cita.motivo }}<br>
+            <strong>Estado:</strong> {{ cita.estado }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay citas en esta categoría.</p>
+{% endif %}

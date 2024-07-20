@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Citas - Mitiz Vision</title>
+    <title>Mis Citas - Matiz Vision</title>
     <link rel="stylesheet" href="{% static 'optica/css/styles.css' %}">
 </head>
 <body>
@@ -12,27 +12,38 @@
         <div class="logo-container">
             <img src="{% static 'optica/images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
         </div>
-        <h1>MatizVision</h1>
+        <h1>Matiz Vision</h1>
         <nav>
             <a href="{% url 'home' %}" class="btn btn-primary">Inicio</a>
+            <a href="{% url 'logout' %}" class="btn btn-primary">Cerrar Sesión</a>
         </nav>
     </header>
+
     <main class="container">
         <h2>Mis Citas</h2>
-        {% if citas %}
-            <ul class="citas-list">
-            {% for cita in citas %}
-                <li class="cita-item">
-                    <strong>Fecha:</strong> {{ cita.fecha_hora }}<br>
-                    <strong>Motivo:</strong> {{ cita.motivo }}<br>
-                    <strong>Estado:</strong> {{ cita.estado }}
-                </li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>No tienes citas programadas.</p>
-        {% endif %}
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="pendientes">Pendientes</div>
+            <div class="tab" data-tab="confirmadas">Confirmadas</div>
+            <div class="tab" data-tab="canceladas">Canceladas</div>
+        </div>
+
+        <div id="pendientes" class="tab-content active">
+            <h3>Citas Pendientes</h3>
+            {% include 'optica/citas_list.html' with citas=citas_pendientes %}
+        </div>
+
+        <div id="confirmadas" class="tab-content">
+            <h3>Citas Confirmadas</h3>
+            {% include 'optica/citas_list.html' with citas=citas_confirmadas %}
+        </div>
+
+        <div id="canceladas" class="tab-content">
+            <h3>Citas Canceladas</h3>
+            {% include 'optica/citas_list.html' with citas=citas_canceladas %}
+        </div>
     </main>
+
     <script src="{% static 'optica/js/script.js' %}"></script>
 </body>
 </html>

@@ -97,8 +97,22 @@ def actualizar_perfil(request):
 
 @login_required
 def mis_citas(request):
-    citas = Cita.objects.filter(cliente__user=request.user).order_by('-fecha_hora')
-    return render(request, 'optica/mis_citas.html', {'citas': citas})
+    citas_pendientes = Cita.objects.filter(cliente=request.user.cliente, estado='pendiente')
+    citas_confirmadas = Cita.objects.filter(cliente=request.user.cliente, estado='confirmada')
+    citas_canceladas = Cita.objects.filter(cliente=request.user.cliente, estado='cancelada')
+    
+    context = {
+        'citas_pendientes': citas_pendientes,
+        'citas_confirmadas': citas_confirmadas,
+        'citas_canceladas': citas_canceladas,
+    }
+    return render(request, 'optica/mis_citas.html', context)
+
+@login_required
+def citas_list(request):
+    citas = Cita.objects.filter(cliente=request.user.cliente)
+    return render(request, 'optica/citas_list.html', {'citas': citas})
+
 
 @login_required
 def cerrar_sesion(request):
