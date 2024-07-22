@@ -1,3 +1,17 @@
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM completamente cargado');
+
+    // Inicialización de módulos
+    carouselModule.init();
+    testimoniosModule.init();
+    cartModule.init();
+    productFilterModule.init();
+    quickViewModule.init();
+    productModule.init();
+
+    console.log('Todos los módulos han sido inicializados');
+});
+
 // Módulo de gestión del carrito
 const cartStateModule = (function() {
     let cartItems = {};
@@ -59,6 +73,17 @@ const cartStateModule = (function() {
 // Módulo del carrusel
 const carouselModule = (function() {
     let carousel, items, prevBtn, nextBtn, currentIndex, interval;
+
+    carousel = document.querySelector('.carousel-inner');
+    if (carousel) {
+        items = carousel.querySelectorAll('.carousel-item');
+        prevBtn = document.querySelector('.prev');
+        nextBtn = document.querySelector('.next');
+        currentIndex = 0;
+
+        setupEventListeners();
+        startAutoSlide();
+    }
 
     function init() {
         carousel = document.querySelector('.carousel-inner');
@@ -367,14 +392,3 @@ const productModule = (function() {
         init: init
     };
 })();
-
-// Inicialización
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM fully loaded');
-    carouselModule.init();
-    testimoniosModule.init();
-    cartModule.init();
-    productFilterModule.init();
-    quickViewModule.init();
-    productModule.init();
-});
