@@ -43,26 +43,30 @@
             </ul>
         </nav>
     </header>
-    <main>
+    <main class="cita-main">
         <div class="cita-container">
             <h2>Solicitar una Cita</h2>
             <form id="cita-form" class="cita-form" method="post">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="nombre">Nombre completo</label>
-                    <input type="text" id="nombre" name="nombre" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" id="telefono" name="telefono" required>
-                </div>
-                <div class="form-group">
-                    <label for="fecha_hora">Fecha y hora preferida</label>
-                    <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_hora">Fecha y hora preferida</label>
+                        <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="motivo">Motivo de la consulta</label>
@@ -71,7 +75,7 @@
                 <button type="submit" class="btn-submit">Solicitar Cita</button>
             </form>
         </div>
-    </main>
+    </main>    
     <footer>
         <p>&copy; 2024 Mitiz Vision. Todos los derechos reservados.</p>
     </footer>

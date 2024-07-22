@@ -9,6 +9,17 @@ document.addEventListener('DOMContentLoaded', function() {
     quickViewModule.init();
     productModule.init();
 
+    modulos.forEach(modulo => {
+        if (typeof modulo.init === 'function') {
+            try {
+                modulo.init();
+                console.log(`Módulo ${modulo.name || 'desconocido'} inicializado`);
+            } catch (error) {
+                console.error(`Error al inicializar el módulo ${modulo.name || 'desconocido'}:`, error);
+            }
+        }
+    });
+
     console.log('Todos los módulos han sido inicializados');
 });
 
