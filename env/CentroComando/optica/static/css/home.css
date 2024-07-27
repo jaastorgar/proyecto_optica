@@ -1,0 +1,83 @@
+.carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    min-width: 100%;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: var(--color-white);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+#sobre-nosotros {
+    background-color: var(--color-white);
+    padding: 2rem;
+    margin-top: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#sobre-nosotros h2 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+}
+
+#sobre-nosotros p {
+    line-height: 1.6;
+}
+
+.testimonios {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+}
+
+.testimonio {
+    flex: 0 0 auto;
+    margin-right: 20px;
+    animation: scroll 30s linear infinite;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+.footer-section a {
+    color: var(--color-white);
+    text-decoration: underline;
+}
+
+.mapa-ubicacion {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}

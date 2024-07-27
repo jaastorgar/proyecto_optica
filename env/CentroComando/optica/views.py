@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
 
 # Create your views here.
 def home(request):
@@ -103,12 +104,27 @@ def mis_citas(request):
     citas_pendientes = Cita.objects.filter(cliente=request.user.cliente, estado='pendiente')
     citas_confirmadas = Cita.objects.filter(cliente=request.user.cliente, estado='confirmada')
     citas_canceladas = Cita.objects.filter(cliente=request.user.cliente, estado='cancelada')
+    citas = Cita.objects.filter(cliente=request.user.cliente)
+
+    paginator = Paginator(citas, 10)  # 10 citas por página
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    fecha = request.GET.get('fecha')
+    estado = request.GET.get('estado')
+
+    if fecha:
+        citas = citas.filter(fecha_hora__date=fecha)
+    if estado:
+        citas = citas.filter(estado=estado)
     
     context = {
+        'page_obj': page_obj,
         'citas_pendientes': citas_pendientes,
         'citas_confirmadas': citas_confirmadas,
         'citas_canceladas': citas_canceladas,
     }
+    
     return render(request, 'optica/mis_citas.html', context)
 
 @login_required

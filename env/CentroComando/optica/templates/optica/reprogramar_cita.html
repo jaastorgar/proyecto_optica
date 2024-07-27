@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/reprogramar_cita.css' %}">
     <title>Reprogramar Cita - Matiz Vision</title>
 </head>
 <body>
@@ -23,8 +23,27 @@
         <h2>Reprogramar Cita</h2>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Reprogramar</button>
+            <div class="form-group">
+                <label for="nombre">Nombre completo</label>
+                {{ form.nombre }}
+            </div>
+            <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                {{ form.telefono }}
+            </div>
+            <div class="form-group">
+                <label for="fecha_hora">Fecha y hora preferida</label>
+                {{ form.fecha_hora }}
+            </div>
+            <div class="form-group">
+                <label for="motivo">Motivo de la consulta</label>
+                {{ form.motivo }}
+            </div>
+            <button type="submit" class="btn">Reprogramar</button>
         </form>
     </main>
 </body>
