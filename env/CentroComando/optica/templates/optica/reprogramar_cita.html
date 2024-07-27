@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Reprogramar Cita - Matiz Vision</title>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{% static 'images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
+        </div>
+        <h1>Matiz Vision</h1>
+        <nav>
+            <a href="{% url 'home' %}" class="btn btn-primary">Inicio</a>
+            <a href="{% url 'logout' %}" class="btn btn-primary">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Reprogramar Cita</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Reprogramar</button>
+        </form>
+    </main>
+</body>
+</html>

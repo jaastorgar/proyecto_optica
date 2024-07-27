@@ -205,3 +205,36 @@ def remove_from_cart(request):
         except Producto.DoesNotExist:
             return JsonResponse({'error': 'Producto no encontrado'}, status=404)
     return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def cancelar_cita(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        cita_id = data.get('cita_id')
+        try:
+            cita = Cita.objects.get(id=cita_id)
+            cita.estado = 'cancelada'
+            cita.save()
+            return redirect('mis_citas')
+        except Cita.DoesNotExist:
+            return redirect('mis_citas')
+    return redirect('mis_citas')
+
+def reprogramar_cita(request, cita_id):
+    try:
+        cita = Cita.objects.get(id=cita_id)
+        if request.method == 'POST':
+            form = CitaForm(request.POST, instance=cita)
+            if form.is_valid():
+                form.save()
+                return redirect('mis_citas')
+        else:
+            form = CitaForm(instance=cita)
+            form.fields['nombre'].widget.attrs['readonly'] = True
+            form.fields['email'].widget.attrs['readonly'] = True
+            form.fields['telefono'].widget.attrs['readonly'] = True
+            form.fields['motivo'].widget.attrs['readonly'] = True
+        return render(request, 'optica/reprogramar_cita.html', {'form': form})
+    except Cita.DoesNotExist:
+        return redirect('mis_citas')
