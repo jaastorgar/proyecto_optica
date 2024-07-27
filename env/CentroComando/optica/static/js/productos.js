@@ -113,10 +113,10 @@ function iniciarBotonesProducto() {
         });
     });
 
-    document.querySelectorAll('.view-quick').forEach(boton => {
+    document.querySelectorAll('.remove-from-cart').forEach(boton => {
         boton.addEventListener('click', function() {
             const idProducto = this.dataset.productId;
-            mostrarVistaRapida(idProducto);
+            eliminarDelCarrito(idProducto);
         });
     });
 }
@@ -166,6 +166,7 @@ function agregarAlCarrito(idProducto) {
     .then(data => {
         if (data.message === 'Producto añadido al carrito') {
             actualizarUICarrito();
+            actualizarStock(idProducto, data.stock);
             mostrarMensaje('Producto añadido al carrito', 'exito');
         } else {
             mostrarMensaje('Error al añadir el producto al carrito', 'error');
@@ -214,6 +215,49 @@ function actualizarUICarrito() {
         .catch(error => {
             console.error('Error al actualizar el carrito:', error);
         });
+}
+
+function eliminarDelCarrito(idProducto) {
+    console.log('Eliminando del carrito:', idProducto);
+    fetch('/remove_from_cart/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': obtenerCookie('csrftoken')
+        },
+        body: JSON.stringify({ product_id: idProducto })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === 'Producto eliminado del carrito') {
+            actualizarUICarrito();
+            actualizarStock(idProducto, data.stock);
+            mostrarMensaje('Producto eliminado del carrito', 'exito');
+        } else {
+            mostrarMensaje('Error al eliminar el producto del carrito', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        mostrarMensaje('Error al eliminar el producto del carrito', 'error');
+    });
+}
+
+function actualizarStock(idProducto, stock) {
+    const productoCard = document.querySelector(`.product-card[data-product-id="${idProducto}"]`);
+    if (productoCard) {
+        const stockElement = productoCard.querySelector('.stock');
+        const addToCartButton = productoCard.querySelector('.add-to-cart');
+        if (stock > 0) {
+            stockElement.textContent = `Stock: ${stock}`;
+            addToCartButton.disabled = false;
+            addToCartButton.textContent = 'Añadir al carrito';
+        } else {
+            stockElement.textContent = 'Sin stock';
+            addToCartButton.disabled = true;
+            addToCartButton.textContent = 'Sin stock';
+        }
+    }
 }
 
 function mostrarMensaje(mensaje, tipo) {

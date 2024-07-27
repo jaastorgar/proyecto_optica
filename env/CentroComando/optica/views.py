@@ -138,12 +138,19 @@ def add_to_cart(request):
         data = json.loads(request.body)
         product_id = data.get('product_id')
         carrito = request.session.get('carrito', {})
-        if product_id in carrito:
-            carrito[product_id] += 1
-        else:
-            carrito[product_id] = 1
-        request.session['carrito'] = carrito
-        return JsonResponse({'message': 'Producto añadido al carrito'})
+        
+        try:
+            producto = Producto.objects.get(codigo=product_id)
+            if producto.stock > 0:
+                carrito[product_id] = carrito.get(product_id, 0) + 1
+                producto.stock -= 1
+                producto.save()
+                request.session['carrito'] = carrito
+                return JsonResponse({'message': 'Producto añadido al carrito', 'stock': producto.stock})
+            else:
+                return JsonResponse({'error': 'Producto sin stock'}, status=400)
+        except Producto.DoesNotExist:
+            return JsonResponse({'error': 'Producto no encontrado'}, status=404)
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 class CustomPasswordResetView(PasswordResetView):
@@ -175,3 +182,26 @@ def detalle_producto(request, codigo):
         return JsonResponse(data)
     except Producto.DoesNotExist:
         return JsonResponse({'error': 'Producto no encontrado'}, status=404)
+
+
+@csrf_exempt
+def remove_from_cart(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        product_id = data.get('product_id')
+        carrito = request.session.get('carrito', {})
+        
+        try:
+            producto = Producto.objects.get(codigo=product_id)
+            if product_id in carrito:
+                carrito[product_id] -= 1
+                if carrito[product_id] <= 0:
+                    del carrito[product_id]
+                producto.stock += 1
+                producto.save()
+                request.session['carrito'] = carrito
+                return JsonResponse({'message': 'Producto eliminado del carrito', 'stock': producto.stock})
+            return JsonResponse({'error': 'Producto no encontrado en el carrito'}, status=404)
+        except Producto.DoesNotExist:
+            return JsonResponse({'error': 'Producto no encontrado'}, status=404)
+    return JsonResponse({'error': 'Método no permitido'}, status=405)

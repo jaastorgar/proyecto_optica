@@ -55,6 +55,7 @@
                     <span>{{ producto.armazon }}</span>
                     <span>${{ producto.precio }}</span>
                     <span>Cantidad: {{ request.session.carrito|get_item:producto.codigo }}</span>
+                    <button class="btn remove-from-cart" data-product-id="{{ producto.codigo }}">Eliminar</button>
                 </li>
                 {% endfor %}
             </ul>
