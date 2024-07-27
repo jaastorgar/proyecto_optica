@@ -40,7 +40,7 @@
                 {% else %}
                 <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a></li>
                 {% endif %}
-                <li><a href="{% url 'carrito' %}" id="carrito"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                <li><a href="{% url 'carrito' %}" id="carrito"><i class="fas fa-shopping-cart"></i> Carrito <span id="contador-carrito">({{ productos|length }})</span></a></li>
             </ul>
         </nav>
     </header>
@@ -65,6 +65,7 @@
             {% endif %}
         </div>
     </main>
+    <script src="{% static 'js/carrito.js' %}"></script>
     <footer>
         <p>&copy; 2024 Mitiz Vision. Todos los derechos reservados.</p>
     </footer>

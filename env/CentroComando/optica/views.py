@@ -160,3 +160,18 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'optica/password_reset_complete.html'
+
+
+def detalle_producto(request, codigo):
+    try:
+        producto = Producto.objects.get(codigo=codigo)
+        data = {
+            'codigo': producto.codigo,
+            'armazon': producto.armazon,
+            'caracteristica': producto.caracteristica,
+            'precio': str(producto.precio),
+            'imagen': producto.imagen.url if producto.imagen else '',
+        }
+        return JsonResponse(data)
+    except Producto.DoesNotExist:
+        return JsonResponse({'error': 'Producto no encontrado'}, status=404)
