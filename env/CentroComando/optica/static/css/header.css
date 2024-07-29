@@ -1,8 +1,8 @@
 :root {
-    --color-primary: #4CAF50;
-    --color-secondary: #9E9E9E;
-    --color-white: #F5F5F5;
-    --color-dark: #333;
+    --color-primary: #66C166;    /* Verde claro como color principal */
+    --color-secondary: #2E8B57;  /* Verde oscuro para elementos secundarios */
+    --color-accent: #9E9E9E;     /* Plomo para acentos, texto y contraste */
+    --color-white: #F5F5F5;      /* Blanco para fondos y texto claro */
 }
 
 body {
@@ -54,7 +54,7 @@ nav a {
 }
 
 nav a:hover {
-    color: var(--color-accent);
+    color: var(--color-secondary);
 }
 
 nav .btn-primary {
@@ -87,20 +87,25 @@ nav .btn-primary:hover {
 }
 
 .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--color-white);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
     top: 100%;
     left: 0;
 }
 
 .dropdown-content a {
-    color: var(--color-dark);
+    color: var(--color-secondary);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    transition: background-color 0.3s ease;
 }
 
 .dropdown-content a:hover {
-    background-color: var(--color-accent);
+    background-color: var(--color-primary);
     color: var(--color-white);
 }
 
@@ -124,7 +129,7 @@ nav .btn-primary:hover {
 }
 
 .search-bar button {
-    background-color: var(--color-accent);
+    background-color: var(--color-secondary);
     color: var(--color-white);
     border: none;
     padding: 8px 15px;
@@ -134,5 +139,5 @@ nav .btn-primary:hover {
 }
 
 .search-bar button:hover {
-    background-color: var(--color-primary);
+    background-color: var(--color-accent);
 }
