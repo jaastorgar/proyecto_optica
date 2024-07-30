@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Producto, Cliente, Cita
 from .forms import CitaForm, ClienteForm, CustomPasswordResetForm
@@ -11,6 +11,7 @@ import json
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
+from .serializer import CitaSerializer
 
 # Create your views here.
 def home(request):
@@ -222,35 +223,25 @@ def remove_from_cart(request):
             return JsonResponse({'error': 'Producto no encontrado'}, status=404)
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-
-@csrf_exempt
-def cancelar_cita(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        cita_id = data.get('cita_id')
-        try:
-            cita = Cita.objects.get(id=cita_id)
-            cita.estado = 'cancelada'
-            cita.save()
-            return redirect('mis_citas')
-        except Cita.DoesNotExist:
-            return redirect('mis_citas')
-    return redirect('mis_citas')
-
 def reprogramar_cita(request, cita_id):
-    try:
-        cita = Cita.objects.get(id=cita_id)
-        if request.method == 'POST':
+    cita = get_object_or_404(Cita, id=cita_id)
+
+    if request.method == 'POST':
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            cita.estado = 'pendiente'
+            cita.save()
+            serializer = CitaSerializer(cita)
+            return JsonResponse({'success': True, 'cita': serializer.data})
+        else:
             form = CitaForm(request.POST, instance=cita)
             if form.is_valid():
-                form.save()
+                cita = form.save(commit=False)
+                cita.estado = 'pendiente'
+                cita.save()
                 return redirect('mis_citas')
-        else:
-            form = CitaForm(instance=cita)
-            form.fields['nombre'].widget.attrs['readonly'] = True
-            form.fields['email'].widget.attrs['readonly'] = True
-            form.fields['telefono'].widget.attrs['readonly'] = True
-            form.fields['motivo'].widget.attrs['readonly'] = True
-        return render(request, 'optica/reprogramar_cita.html', {'form': form})
-    except Cita.DoesNotExist:
-        return redirect('mis_citas')
+    else:
+        form = CitaForm(instance=cita)
+        for field in ['nombre', 'email', 'telefono', 'motivo']:
+            form.fields[field].widget.attrs['readonly'] = True
+
+    return render(request, 'optica/reprogramar_cita.html', {'form': form, 'cita': cita})

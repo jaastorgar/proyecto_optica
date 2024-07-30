@@ -1,16 +1,16 @@
 {% if citas %}
 <ul class="citas-list">
     {% for cita in citas %}
-    <li class="cita-item">
+    <li class="cita-item {{ cita.estado }}">
         <strong>Fecha:</strong> {{ cita.fecha_hora }}<br>
         <strong>Motivo:</strong> {{ cita.motivo }}<br>
         <strong>Estado:</strong> {{ cita.estado }}<br>
-        {% if cita.estado != 'cancelada' %}
+        {% if cita.estado == 'confirmada' %}
         <button class="btn reprogramar-cita" data-cita-id="{{ cita.id }}">Reprogramar</button>
         {% endif %}
     </li>
     {% endfor %}
 </ul>
 {% else %}
-    <p>No hay citas en esta categoría.</p>
+<p>No hay citas en esta categoría.</p>
 {% endif %}

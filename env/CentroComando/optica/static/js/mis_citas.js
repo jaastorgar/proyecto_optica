@@ -28,14 +28,34 @@ function reprogramarCita(citaId) {
 }
 
 function iniciarBotonesReprogramar() {
+    console.log('Iniciando botones de reprogramar');
     document.querySelectorAll('.reprogramar-cita').forEach(boton => {
         boton.addEventListener('click', function() {
+            console.log('Botón de reprogramar clickeado');
             const citaId = this.dataset.citaId;
             reprogramarCita(citaId);
         });
     });
 }
 
+function iniciarPestanas() {
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const target = this.getAttribute('data-tab');
+
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(content => content.classList.add('hidden'));
+
+            this.classList.add('active');
+            document.getElementById(target).classList.remove('hidden');
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     iniciarBotonesReprogramar();
+    iniciarPestanas();
 });

@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/mis_citas.css' %}">
-    <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <title>Mis Citas - Matiz Vision</title>
 </head>
 <body>
@@ -20,13 +19,13 @@
         </nav>
     </header>
 
-    <main class="container">
-        <h2>Mis Citas</h2>
+    <main class="container citas-container">
+        <h2 class="citas-title">Mis Citas</h2>
         
         <!-- Filtros y Búsqueda -->
-        <section id="filtros">
-            <h3>Filtrar Citas</h3>
-            <form id="filtro-citas" method="get">
+        <section id="filtros" class="filtros-section">
+            <h3 class="filtros-title">Filtrar Citas</h3>
+            <form id="filtro-citas" class="filtro-form" method="get">
                 <input type="date" name="fecha" placeholder="Fecha">
                 <select name="estado">
                     <option value="">Todos los estados</option>
@@ -39,24 +38,24 @@
         </section>
 
         <!-- Citas -->
-        <section id="citas">
-            <div class="tabs">
+        <section id="citas" class="citas-section">
+            <div class="tabs-container">
                 <div class="tab active" data-tab="pendientes">Pendientes</div>
                 <div class="tab" data-tab="confirmadas">Confirmadas</div>
                 <div class="tab" data-tab="canceladas">Canceladas</div>
             </div>
 
-            <div id="pendientes" class="tab-content active">
+            <div id="pendientes" class="tab-content hidden">
                 <h3>Citas Pendientes</h3>
                 {% include 'optica/citas_list.html' with citas=citas_pendientes %}
             </div>
 
-            <div id="confirmadas" class="tab-content">
+            <div id="confirmadas" class="tab-content hidden">
                 <h3>Citas Confirmadas</h3>
                 {% include 'optica/citas_list.html' with citas=citas_confirmadas %}
             </div>
 
-            <div id="canceladas" class="tab-content">
+            <div id="canceladas" class="tab-content hidden">
                 <h3>Citas Canceladas</h3>
                 {% include 'optica/citas_list.html' with citas=citas_canceladas %}
             </div>

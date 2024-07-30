@@ -1,29 +1,164 @@
-.tabs {
+/* Colores de la empresa */
+:root {
+    --color-primary: #66C166;
+    --color-secondary: #2E8B57;
+    --color-accent: #9E9E9E;
+    --color-white: #F5F5F5;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f5f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos del encabezado */
+header {
+    background-color: var(--color-primary);
+    padding: 10px 20px;
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container img {
+    width: 120px;
+    height: auto;
+}
+
+header h1 {
+    color: var(--color-white);
+    margin: 0;
+}
+
+nav a {
+    color: var(--color-white);
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+/* Estilos del contenedor principal */
+.citas-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color: var(--color-white);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* Estilos de la sección de filtros */
+.filtros-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.filtro-form {
+    display: flex;
+    gap: 10px;
+}
+
+.filtro-form input, .filtro-form select, .filtro-form button {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.filtro-form button {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border: none;
+    cursor: pointer;
+}
+
+/* Estilos de las pestañas */
+.tabs-container {
+    display: flex;
+    background-color: #f0f0f0;
 }
 
 .tab {
-    padding: 10px 20px;
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    background-color: #e0e0e0;
+    color: var(--color-secondary);
     cursor: pointer;
-    border-bottom: 2px solid transparent;
 }
 
 .tab.active {
-    border-bottom-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-white);
 }
 
+/* Estilos del contenido de las pestañas */
 .tab-content {
-    display: none;
+    padding: 20px;
 }
 
-.tab-content.active {
-    display: block;
-}
-
+/* Estilos de la paginación */
 .pagination {
     display: flex;
     justify-content: center;
-    width: 100%;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Boton reprogramar */
+.btn.reprogramar-cita {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.btn.reprogramar-cita:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn.reprogramar-cita:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Estilo para las citas */
+.cita-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.citas-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.tab-content {
+    padding: 20px;
 }

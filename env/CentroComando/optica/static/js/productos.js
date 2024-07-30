@@ -121,37 +121,6 @@ function iniciarBotonesProducto() {
     });
 }
 
-function mostrarVistaRapida(idProducto) {
-    const modal = document.getElementById('quick-view-modal');
-    const contenidoModal = document.getElementById('quick-view-content');
-    fetch(`/producto/${idProducto}/`)
-        .then(respuesta => {
-            if (!respuesta.ok) {
-                throw new Error('La respuesta de la red no fue satisfactoria');
-            }
-            return respuesta.json();
-        })
-        .then(producto => {
-            contenidoModal.innerHTML = `
-                <h2>${producto.armazon}</h2>
-                <img src="${producto.imagen}" alt="${producto.armazon}">
-                <p>${producto.caracteristica}</p>
-                <p class="price">$${producto.precio}</p>
-                <button class="btn add-to-cart" data-product-id="${producto.codigo}">Añadir al carrito</button>
-            `;
-            modal.style.display = 'block';
-            const botonAñadir = contenidoModal.querySelector('.add-to-cart');
-            botonAñadir.addEventListener('click', () => agregarAlCarrito(idProducto));
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            contenidoModal.innerHTML = '<p>Error al cargar los datos del producto.</p>';
-            modal.style.display = 'block';
-        });
-    const cerrarModal = document.querySelector('.close');
-    cerrarModal.onclick = () => modal.style.display = 'none';
-}
-
 function agregarAlCarrito(idProducto) {
     console.log('Añadiendo al carrito:', idProducto);
     fetch('/add_to_cart/', {

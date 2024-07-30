@@ -84,14 +84,6 @@
         </aside>
         
         <section class="products-grid">
-            <div class="sort-options">
-                <select id="sort-select">
-                    <option value="price-asc">Precio: Menor a Mayor</option>
-                    <option value="price-desc">Precio: Mayor a Menor</option>
-                    <option value="name-asc">Nombre: A-Z</option>
-                    <option value="name-desc">Nombre: Z-A</option>
-                </select>
-            </div>
             <div id="products-list" class="product-grid">
                 {% for producto in productos %}
                 <div class="product-card" data-category="{{ producto.categoria }}" data-price="{{ producto.precio }}" data-stock="{{ producto.stock }}">
@@ -106,7 +98,6 @@
                         <span class="stock out-of-stock">Sin stock</span>
                         <button class="btn add-to-cart" data-product-id="{{ producto.codigo }}" disabled>Sin stock</button>
                     {% endif %}
-                    <button class="btn view-quick" data-product-id="{{ producto.codigo }}">Vista rápida</button>
                 </div>
                 {% endfor %}
             </div>                        
