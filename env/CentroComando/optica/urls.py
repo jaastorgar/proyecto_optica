@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import home, productos_view, crear_cita, registro_cliente, iniciar_sesion, perfil, cerrar_sesion, carrito_view, checkout_view, add_to_cart, actualizar_perfil
 from .views import CustomPasswordResetView, CustomPasswordResetDoneView, CustomPasswordResetConfirmView, CustomPasswordResetCompleteView, mis_citas, citas_list, detalle_producto, remove_from_cart
-from .views import reprogramar_cita
+from .views import reprogramar_cita, get_cart_total
 
 
 urlpatterns = [
@@ -25,4 +25,5 @@ urlpatterns = [
     path('producto/<str:codigo>/', detalle_producto, name='detalle_producto'),
     path('remove_from_cart/', remove_from_cart, name='remove_from_cart'),
     path('reprogramar_cita/<int:cita_id>/', reprogramar_cita, name='reprogramar_cita'),
+    path('get_cart_total/', get_cart_total, name='get_cart_total'),
 ]

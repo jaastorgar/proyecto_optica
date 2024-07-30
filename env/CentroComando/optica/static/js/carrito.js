@@ -1,25 +1,29 @@
-function actualizarUICarrito() {
-    fetch('/carrito/', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('La respuesta del servidor no fue exitosa');
-            }
-            return response.text();
-        })
-        .then(html => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const contadorCarrito = doc.querySelector('#contador-carrito');
-            if (contadorCarrito) {
-                const carritoElement = document.getElementById('carrito');
-                if (carritoElement) {
-                    carritoElement.innerHTML = `Carrito ${contadorCarrito.textContent}`;
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error al actualizar el carrito:', error);
-        });
+function actualizarUICarrito(producto) {
+    // Actualizar el contador del carrito
+    const contadorCarrito = document.getElementById('contador-carrito');
+    if (contadorCarrito) {
+        let cantidad = parseInt(contadorCarrito.textContent.replace(/[()]/g, '')) - 1;
+        contadorCarrito.textContent = `(${cantidad})`;
+    }
+
+    // Actualizar el total del carrito
+    fetch('/get_cart_total/', {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const subtotalElement = document.querySelector('.desglose p:nth-child(1) span');
+        const ivaElement = document.querySelector('.desglose p:nth-child(2) span');
+        const totalElement = document.querySelector('.total-carrito span');
+
+        if (subtotalElement) subtotalElement.textContent = `$${data.subtotal}`;
+        if (ivaElement) ivaElement.textContent = `$${data.iva}`;
+        if (totalElement) totalElement.textContent = `$${data.total}`;
+    })
+    .catch(error => console.error('Error al actualizar el total del carrito:', error));
 }
 
 function agregarAlCarrito(idProducto) {
@@ -47,8 +51,16 @@ function agregarAlCarrito(idProducto) {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-eliminar').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            eliminarDelCarrito(productId);
+        });
+    });
+});
+
 function eliminarDelCarrito(idProducto) {
-    console.log('Eliminando del carrito:', idProducto);
     fetch('/remove_from_cart/', {
         method: 'POST',
         headers: {
@@ -60,7 +72,15 @@ function eliminarDelCarrito(idProducto) {
     .then(response => response.json())
     .then(data => {
         if (data.message === 'Producto eliminado del carrito') {
-            actualizarUICarrito();
+            // Eliminar el elemento del DOM
+            const itemProducto = document.querySelector(`.item-producto[data-product-id="${idProducto}"]`);
+            if (itemProducto) {
+                itemProducto.remove();
+            }
+            
+            // Actualizar la información del carrito
+            actualizarUICarrito(data.producto);
+            
             mostrarMensaje('Producto eliminado del carrito', 'exito');
         } else {
             mostrarMensaje('Error al eliminar el producto del carrito', 'error');

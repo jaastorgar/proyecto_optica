@@ -11,7 +11,9 @@ import json
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
-from .serializer import CitaSerializer
+from .serializer import CitaSerializer, ProductoSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 # Create your views here.
 def home(request):
@@ -142,7 +144,17 @@ def cerrar_sesion(request):
 def carrito_view(request):
     carrito = request.session.get('carrito', {})
     productos = Producto.objects.filter(codigo__in=carrito.keys())
-    total = sum(producto.precio * cantidad for producto, cantidad in zip(productos, carrito.values()))
+    subtotal = sum(producto.precio * carrito[str(producto.codigo)] for producto in productos)
+    iva = subtotal * 0.19  # 19% de IVA
+    total = subtotal + iva
+
+    context = {
+        'productos': productos,
+        'subtotal': subtotal,
+        'iva': iva,
+        'total': total,
+    }
+
     return render(request, 'optica/carrito.html', {'productos': productos, 'total': total})
 
 def checkout_view(request):
@@ -201,27 +213,18 @@ def detalle_producto(request, codigo):
         return JsonResponse({'error': 'Producto no encontrado'}, status=404)
 
 
-@csrf_exempt
+@api_view(['POST'])
 def remove_from_cart(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        product_id = data.get('product_id')
-        carrito = request.session.get('carrito', {})
-        
-        try:
-            producto = Producto.objects.get(codigo=product_id)
-            if product_id in carrito:
-                carrito[product_id] -= 1
-                if carrito[product_id] <= 0:
-                    del carrito[product_id]
-                producto.stock += 1
-                producto.save()
-                request.session['carrito'] = carrito
-                return JsonResponse({'message': 'Producto eliminado del carrito', 'stock': producto.stock})
-            return JsonResponse({'error': 'Producto no encontrado en el carrito'}, status=404)
-        except Producto.DoesNotExist:
-            return JsonResponse({'error': 'Producto no encontrado'}, status=404)
-    return JsonResponse({'error': 'Método no permitido'}, status=405)
+    product_id = request.data.get('product_id')
+    carrito = request.session.get('carrito', {})
+    
+    if product_id in carrito:
+        del carrito[product_id]
+        request.session['carrito'] = carrito
+        producto = Producto.objects.get(codigo=product_id)
+        serializer = ProductoSerializer(producto)
+        return Response({'message': 'Producto eliminado del carrito', 'producto': serializer.data})
+    return Response({'error': 'Producto no encontrado en el carrito'}, status=404)
 
 def reprogramar_cita(request, cita_id):
     cita = get_object_or_404(Cita, id=cita_id)
@@ -245,3 +248,17 @@ def reprogramar_cita(request, cita_id):
             form.fields[field].widget.attrs['readonly'] = True
 
     return render(request, 'optica/reprogramar_cita.html', {'form': form, 'cita': cita})
+
+
+def get_cart_total(request):
+    carrito = request.session.get('carrito', {})
+    productos = Producto.objects.filter(codigo__in=carrito.keys())
+    subtotal = sum(producto.precio * carrito[str(producto.codigo)] for producto in productos)
+    iva = subtotal * 0.19  # 19% de IVA
+    total = subtotal + iva
+    
+    return JsonResponse({
+        'subtotal': round(subtotal, 2),
+        'iva': round(iva, 2),
+        'total': round(total, 2)
+    })

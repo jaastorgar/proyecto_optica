@@ -45,27 +45,48 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <h1>Carrito de Compras</h1>
-        <div class="cart-details">
-            {% if productos %}
-            <ul>
-                {% for producto in productos %}
-                <li>
-                    <img src="{{ producto.imagen.url }}" alt="{{ producto.armazon }}">
-                    <span>{{ producto.armazon }}</span>
-                    <span>${{ producto.precio }}</span>
-                    <span>Cantidad: {{ request.session.carrito|get_item:producto.codigo }}</span>
-                    <button class="btn remove-from-cart" data-product-id="{{ producto.codigo }}">Eliminar</button>
-                </li>
-                {% endfor %}
-            </ul>
-            <h2>Total: ${{ total }}</h2>
-            <a href="{% url 'checkout' %}" class="btn">Proceder al Pago</a>
-            {% else %}
-            <p>Tu carrito está vacío.</p>
-            {% endif %}
-        </div>
+    <main class="contenedor-carrito">
+        <div class="carrito-centrado">
+            <h1 class="titulo-carrito">Tu Carrito de Compras</h1>
+            <div class="contenido-carrito">
+                {% if productos %}
+                    <div class="lista-productos">
+                        {% for producto in productos %}
+                        <div class="item-producto">
+                            <div class="imagen-contenedor">
+                                <img src="{{ producto.imagen.url }}" alt="{{ producto.armazon }}" class="imagen-producto">
+                            </div>
+                            <div class="detalles-producto">
+                                <h3 class="nombre-producto">{{ producto.armazon }}</h3>
+                                <p class="precio-producto">${{ producto.precio }}</p>
+                                <p class="cantidad-producto">
+                                    Cantidad: {{ request.session.carrito|get_item:producto.codigo }}
+                                </p>
+                            </div>
+                            <button class="btn-eliminar" data-product-id="{{ producto.codigo }}">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="resumen-pedido">
+                        <h2>Resumen del Pedido</h2>
+                        <div class="desglose">
+                            <p>Subtotal: <span>${{ subtotal }}</span></p>
+                            <p>IVA (19%): <span>${{ iva }}</span></p>
+                            <p class="total-carrito">Total: <span>${{ total }}</span></p>
+                        </div>
+                        <a href="{% url 'checkout' %}" class="btn-pagar">Proceder al Pago</a>
+                    </div>
+                {% else %}
+                    <div class="carrito-vacio">
+                        <i class="fas fa-shopping-cart fa-5x"></i>
+                        <p class="mensaje-carrito-vacio">Tu carrito está vacío.</p>
+                        <a href="{% url 'productos' %}" class="btn-seguir-comprando">Continuar comprando</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>    
     </main>
     <script src="{% static 'js/carrito.js' %}"></script>
     <footer>
