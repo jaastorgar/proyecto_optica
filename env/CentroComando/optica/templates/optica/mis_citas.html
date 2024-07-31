@@ -5,39 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/mis_citas.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <title>Mis Citas - Matiz Vision</title>
 </head>
 <body>
-    <header>
-        <div class="logo-container">
-            <img src="{% static 'images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="{% static 'images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
+            </div>
+            <h1 class="site-title">Matiz Vision</h1>
+            <nav class="main-nav">
+                <a href="{% url 'home' %}" class="btn btn-primary">Inicio</a>
+                <a href="{% url 'logout' %}" class="btn btn-primary">Cerrar Sesión</a>
+            </nav>
         </div>
-        <h1>Matiz Vision</h1>
-        <nav>
-            <a href="{% url 'home' %}" class="btn btn-primary">Inicio</a>
-            <a href="{% url 'logout' %}" class="btn btn-primary">Cerrar Sesión</a>
-        </nav>
     </header>
-
     <main class="container citas-container">
         <h2 class="citas-title">Mis Citas</h2>
         
-        <!-- Filtros y Búsqueda -->
         <section id="filtros" class="filtros-section">
             <h3 class="filtros-title">Filtrar Citas</h3>
             <form id="filtro-citas" class="filtro-form" method="get">
-                <input type="date" name="fecha" placeholder="Fecha">
-                <select name="estado">
-                    <option value="">Todos los estados</option>
-                    <option value="pendiente">Pendiente</option>
-                    <option value="confirmada">Confirmada</option>
-                    <option value="cancelada">Cancelada</option>
-                </select>
-                <button type="submit">Filtrar</button>
+                <div class="form-group">
+                    <input type="date" name="fecha" placeholder="Fecha">
+                </div>
+                <div class="form-group">
+                    <select name="estado">
+                        <option value="">Todos los estados</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="confirmada">Confirmada</option>
+                        <option value="cancelada">Cancelada</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-filtrar">Filtrar</button>
             </form>
         </section>
 
-        <!-- Citas -->
         <section id="citas" class="citas-section">
             <div class="tabs-container">
                 <div class="tab active" data-tab="pendientes">Pendientes</div>
@@ -45,38 +49,37 @@
                 <div class="tab" data-tab="canceladas">Canceladas</div>
             </div>
 
-            <div id="pendientes" class="tab-content hidden">
+            <div id="pendientes" class="tab-content active">
                 <h3>Citas Pendientes</h3>
                 {% include 'optica/citas_list.html' with citas=citas_pendientes %}
             </div>
 
-            <div id="confirmadas" class="tab-content hidden">
+            <div id="confirmadas" class="tab-content">
                 <h3>Citas Confirmadas</h3>
                 {% include 'optica/citas_list.html' with citas=citas_confirmadas %}
             </div>
 
-            <div id="canceladas" class="tab-content hidden">
+            <div id="canceladas" class="tab-content">
                 <h3>Citas Canceladas</h3>
                 {% include 'optica/citas_list.html' with citas=citas_canceladas %}
             </div>
         </section>
 
-        <!-- Paginación -->
-        <section id="paginacion">
+        <section id="paginacion" class="paginacion-section">
             <div class="pagination">
                 <span class="step-links">
                     {% if page_obj.has_previous %}
-                        <a href="?page=1">&laquo; first</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                        <a href="?page=1">&laquo; primera</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
                     {% endif %}
 
                     <span class="current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
                     </span>
 
                     {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">next</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
                     {% endif %}
                 </span>
             </div>

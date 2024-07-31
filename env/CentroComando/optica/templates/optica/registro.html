@@ -9,18 +9,26 @@
     <title>Registro - MatizVision</title>
 </head>
 <body>
-    <div class="form-container">
-        <div class="form-header">
-            <img src="{% static 'images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
-            <h2>Registro</h2>
+    <div class="registro-container">
+        <div class="form-container">
+            <div class="form-header">
+                <img src="{% static 'images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
+                <h2>Registro</h2>
+            </div>
+            <form method="post" class="registro-form">
+                {% csrf_token %}
+                <div class="form-section">
+                    <h3>Información de Usuario</h3>
+                    {{ user_form.as_p }}
+                </div>
+                <div class="form-section">
+                    <h3>Información Personal</h3>
+                    {{ cliente_form.as_p }}
+                </div>
+                <button type="submit" class="btn-submit">Registrarse</button>
+            </form>
+            <p class="login-link">¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
         </div>
-        <form method="post">
-            {% csrf_token %}
-            {{ user_form.as_p }}
-            {{ cliente_form.as_p }}
-            <button type="submit" class="btn-submit">Registrarse</button>
-        </form>
-        <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
     </div>
 </body>
 </html>

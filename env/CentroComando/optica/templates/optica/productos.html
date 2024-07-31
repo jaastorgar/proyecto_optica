@@ -22,29 +22,29 @@
                 </button>
             </form>
             <ul>
-                <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a href="{% url 'productos' %}"><i class="fas fa-glasses"></i> Ventas de armazones</a></li>
-                <li><a href="#"><i class="fas fa-tools"></i> Reparaciones</a></li>
-                <li><a href="{% url 'cita' %}"><i class="far fa-calendar-alt"></i> Agendar Hora</a></li>
+                <li><a href="{% url 'home' %}">Inicio</a></li>
+                <li><a href="{% url 'productos' %}">Productos</a></li>
+                <li><a href="{% url 'cita' %}">Agendar Cita</a></li>
                 {% if user.is_authenticated %}
-                <li class="dropdown">
-                    <a href="#" class="dropbtn"><i class="fas fa-user"></i> Mi Cuenta</a>
-                    <div class="dropdown-content">
-                        <a href="{% url 'perfil' %}">Mi Perfil</a>
-                        <a href="{% url 'mis_citas' %}">Mis Citas</a>
-                        <a href="#">Seguir Pedido</a>
-                        <a href="#">Mis Compras</a>
-                        <a href="{% url 'logout' %}">Cerrar Sesión</a>
-                    </div>
-                </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Mi Cuenta</a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'perfil' %}">Mi Perfil</a>
+                            <a href="{% url 'mis_citas' %}">Mis Citas</a>
+                            <a href="#">Mis Pedidos</a>
+                            <a href="#">Seguir mi Pedido</a>
+                            <a href="{% url 'logout' %}">Cerrar Sesión</a>
+                        </div>
+                    </li>
                 {% else %}
-                <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a></li>
+                    <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
                 {% endif %}
-                <li><a href="{% url 'carrito' %}" id="carrito"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                <li><a href="{% url 'carrito' %}">Carrito</a></li>
             </ul>
         </nav>
     </header>
     <main class="products-container">
+        <button id="filter-toggle" class="filter-toggle">Filtros</button>
         <aside class="filters-sidebar">
             <h2>Filtros</h2>
             <form id="filter-form">
@@ -84,6 +84,14 @@
         </aside>
         
         <section class="products-grid">
+            <div class="sort-options">
+                <select id="sort-select">
+                    <option value="price-asc">Precio: Menor a Mayor</option>
+                    <option value="price-desc">Precio: Mayor a Menor</option>
+                    <option value="name-asc">Nombre: A-Z</option>
+                    <option value="name-desc">Nombre: Z-A</option>
+                </select>
+            </div>
             <div id="products-list" class="product-grid">
                 {% for producto in productos %}
                 <div class="product-card" data-category="{{ producto.categoria }}" data-price="{{ producto.precio }}" data-stock="{{ producto.stock }}">

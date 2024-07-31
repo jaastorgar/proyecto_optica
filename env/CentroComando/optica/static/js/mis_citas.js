@@ -39,18 +39,36 @@ function iniciarBotonesReprogramar() {
 }
 
 function iniciarPestanas() {
+    console.log('Iniciando pestañas');
     const tabs = document.querySelectorAll('.tab');
     const tabContents = document.querySelectorAll('.tab-content');
 
+    console.log('Tabs encontradas:', tabs.length);
+    console.log('Contenidos de tab encontrados:', tabContents.length);
+
     tabs.forEach(tab => {
         tab.addEventListener('click', function() {
+            console.log('Tab clickeada:', this.getAttribute('data-tab'));
             const target = this.getAttribute('data-tab');
 
-            tabs.forEach(t => t.classList.remove('active'));
-            tabContents.forEach(content => content.classList.add('hidden'));
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                console.log('Removiendo clase active de:', t.getAttribute('data-tab'));
+            });
+            tabContents.forEach(content => {
+                content.style.display = 'none';
+                console.log('Ocultando contenido:', content.id);
+            });
 
             this.classList.add('active');
-            document.getElementById(target).classList.remove('hidden');
+            console.log('Añadiendo clase active a:', target);
+            const targetContent = document.getElementById(target);
+            if (targetContent) {
+                targetContent.style.display = 'block';
+                console.log('Mostrando contenido:', target);
+            } else {
+                console.log('No se encontró el contenido para:', target);
+            }
         });
     });
 }

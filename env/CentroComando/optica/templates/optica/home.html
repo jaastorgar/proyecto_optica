@@ -22,25 +22,24 @@
                 </button>
             </form>
             <ul>
-                <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a href="{% url 'productos' %}"><i class="fas fa-glasses"></i> Ventas de armazones</a></li>
-                <li><a href="#"><i class="fas fa-tools"></i> Reparaciones</a></li>
-                <li><a href="{% url 'cita' %}"><i class="far fa-calendar-alt"></i> Agendar Hora</a></li>
+                <li><a href="{% url 'home' %}">Inicio</a></li>
+                <li><a href="{% url 'productos' %}">Productos</a></li>
+                <li><a href="{% url 'cita' %}">Agendar Cita</a></li>
                 {% if user.is_authenticated %}
-                <li class="dropdown">
-                    <a href="#" class="dropbtn"><i class="fas fa-user"></i> Mi Cuenta</a>
-                    <div class="dropdown-content">
-                        <a href="{% url 'perfil' %}">Mi Perfil</a>
-                        <a href="{% url 'mis_citas' %}">Mis Citas</a>
-                        <a href="#">Seguir Pedido</a>
-                        <a href="#">Mis Compras</a>
-                        <a href="{% url 'logout' %}">Cerrar Sesión</a>
-                    </div>
-                </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Mi Cuenta</a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'perfil' %}">Mi Perfil</a>
+                            <a href="{% url 'mis_citas' %}">Mis Citas</a>
+                            <a href="#">Mis Pedidos</a>
+                            <a href="#">Seguir mi Pedido</a>
+                            <a href="{% url 'logout' %}">Cerrar Sesión</a>
+                        </div>
+                    </li>
                 {% else %}
-                <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a></li>
+                    <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
                 {% endif %}
-                <li><a href="{% url 'carrito' %}" id="carrito"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                <li><a href="{% url 'carrito' %}">Carrito</a></li>
             </ul>
         </nav>
     </header>
@@ -59,26 +58,29 @@
         <button class="carousel-control prev">&#10094;</button>
         <button class="carousel-control next">&#10095;</button>
     </div>
-    
     <main>
         <section id="hero">
             <h1>Bienvenido a MatizVision</h1>
             <p>Cuidamos tu salud visual con los mejores productos y servicios ópticos.</p>
         </section>
+        
         <section id="armazones">
             <h2>Nuestros Armazones</h2>
             <div class="product-grid">
                 <!-- Aquí irían los productos -->
             </div>
         </section>
+        
         <section id="sobre-nosotros">
             <h2>Sobre Nosotros</h2>
             <p>En Mitiz Vision, nos dedicamos a cuidar la salud visual de nuestros clientes con productos de alta calidad y servicios personalizados. Con años de experiencia en el campo de la óptica, nuestro equipo de profesionales está comprometido con proporcionar la mejor atención y soluciones para todas sus necesidades visuales.</p>
         </section>        
+        
         <section id="reparaciones">
             <h2>Servicio de Reparaciones</h2>
             <p>Ofrecemos reparaciones profesionales para tus armazones. Contáctanos para más información.</p>
         </section>
+        
         <section id="reconocimientos">
             <h2>Lo que dicen nuestros clientes</h2>
             <div class="testimonios">
@@ -100,6 +102,7 @@
             </div>
         </section>
     </main>
+    
     <footer>
         <div class="footer-section">
             <h3>Dirección</h3>
@@ -109,6 +112,7 @@
         </div>     
         <p>&copy; 2024 Mitiz Vision. Todos los derechos reservados.</p>
     </footer>
+    
     <script src="{% static 'js/home.js' %}"></script>
 </body>
 </html>

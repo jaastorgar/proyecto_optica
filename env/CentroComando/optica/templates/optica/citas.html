@@ -22,25 +22,24 @@
                 </button>
             </form>
             <ul>
-                <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a href="{% url 'productos' %}"><i class="fas fa-glasses"></i> Ventas de armazones</a></li>
-                <li><a href=""><i class="fas fa-tools"></i> Reparaciones</a></li>
-                <li><a href="{% url 'cita' %}"><i class="far fa-calendar-alt"></i> Agendar Hora</a></li>
+                <li><a href="{% url 'home' %}">Inicio</a></li>
+                <li><a href="{% url 'productos' %}">Productos</a></li>
+                <li><a href="{% url 'cita' %}">Agendar Cita</a></li>
                 {% if user.is_authenticated %}
-                <li class="dropdown">
-                    <a href="#" class="dropbtn"><i class="fas fa-user"></i> Mi Cuenta</a>
-                    <div class="dropdown-content">
-                        <a href="{% url 'perfil' %}">Mi Perfil</a>
-                        <a href="{% url 'mis_citas' %}">Mis Citas</a>
-                        <a href="#">Seguir Pedido</a>
-                        <a href="#">Mis Compras</a>
-                        <a href="{% url 'logout' %}">Cerrar Sesión</a>
-                    </div>
-                </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Mi Cuenta</a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'perfil' %}">Mi Perfil</a>
+                            <a href="{% url 'mis_citas' %}">Mis Citas</a>
+                            <a href="#">Mis Pedidos</a>
+                            <a href="#">Seguir mi Pedido</a>
+                            <a href="{% url 'logout' %}">Cerrar Sesión</a>
+                        </div>
+                    </li>
                 {% else %}
-                <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a></li>
+                    <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
                 {% endif %}
-                <li><a href="{% url 'carrito' %}" id="carrito"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                <li><a href="{% url 'carrito' %}">Carrito</a></li>
             </ul>
         </nav>
     </header>
@@ -49,25 +48,21 @@
             <h2>Solicitar una Cita</h2>
             <form id="cita-form" class="cita-form" method="post">
                 {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="nombre">Nombre completo</label>
-                        <input type="text" id="nombre" name="nombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Correo electrónico</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" id="nombre" name="nombre" required>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="telefono">Teléfono</label>
-                        <input type="tel" id="telefono" name="telefono" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha_hora">Fecha y hora preferida</label>
-                        <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
-                    </div>
+                <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="tel" id="telefono" name="telefono" required>
+                </div>
+                <div class="form-group">
+                    <label for="fecha_hora">Fecha y hora preferida</label>
+                    <input type="datetime-local" id="fecha_hora" name="fecha_hora" required>
                 </div>
                 <div class="form-group">
                     <label for="motivo">Motivo de la consulta</label>
@@ -77,7 +72,7 @@
             </form>
         </div>
     </main>
-    <script> src="{% static 'js/citas.js' %}"</script>
+    <script src="{% static 'js/citas.js' %}"></script>
     <footer>
         <p>&copy; 2024 Mitiz Vision. Todos los derechos reservados.</p>
     </footer>

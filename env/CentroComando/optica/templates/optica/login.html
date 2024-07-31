@@ -9,18 +9,30 @@
     <title>Iniciar Sesión - MatizVision</title>
 </head>
 <body>
-    <div class="form-container">
-        <div class="form-header">
-            <img src="{% static '/images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
-            <h2>Iniciar Sesión</h2>
+    <div class="login-container">
+        <div class="form-container">
+            <div class="form-header">
+                <img src="{% static '/images/Recurso39.png' %}" alt="Mitiz Vision Logo" class="logo">
+                <h2>Iniciar Sesión</h2>
+            </div>
+            <form method="post" class="login-form">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error-message">{{ field.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn-submit">Iniciar Sesión</button>
+            </form>
+            <div class="form-footer">
+                <p>¿No tienes una cuenta? <a href="{% url 'registro_cliente' %}">Regístrate aquí</a></p>
+                <p><a href="{% url 'password_reset' %}">He olvidado mi contraseña</a></p>
+            </div>
         </div>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn-submit">Iniciar Sesión</button>
-        </form>
-        <p>¿No tienes una cuenta? <a href="{% url 'registro_cliente' %}">Regístrate aquí</a></p>
-        <p><a href="{% url 'password_reset' %}">He olvidado mi contraseña</a></p>
     </div>
 </body>
 </html>
