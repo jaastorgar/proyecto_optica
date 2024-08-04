@@ -94,7 +94,7 @@
             </div>
             <div id="products-list" class="product-grid">
                 {% for producto in productos %}
-                <div class="product-card" data-category="{{ producto.categoria }}" data-price="{{ producto.precio }}" data-stock="{{ producto.stock }}">
+                <div class="product-card" data-product-id="{{ producto.codigo }}" data-category="{{ producto.categoria }}" data-price="{{ producto.precio }}" data-stock="{{ producto.stock }}">
                     <img src="{{ producto.imagen.url }}" alt="{{ producto.armazon }}">
                     <h3>{{ producto.armazon }}</h3>
                     <p>{{ producto.caracteristica }}</p>

@@ -1,12 +1,10 @@
 function actualizarUICarrito(producto) {
-    // Actualizar el contador del carrito
     const contadorCarrito = document.getElementById('contador-carrito');
     if (contadorCarrito) {
         let cantidad = parseInt(contadorCarrito.textContent.replace(/[()]/g, '')) - 1;
         contadorCarrito.textContent = `(${cantidad})`;
     }
 
-    // Actualizar el total del carrito
     fetch('/get_cart_total/', {
         method: 'GET',
         headers: {
@@ -72,15 +70,11 @@ function eliminarDelCarrito(idProducto) {
     .then(response => response.json())
     .then(data => {
         if (data.message === 'Producto eliminado del carrito') {
-            // Eliminar el elemento del DOM
             const itemProducto = document.querySelector(`.item-producto[data-product-id="${idProducto}"]`);
             if (itemProducto) {
                 itemProducto.remove();
             }
-            
-            // Actualizar la información del carrito
             actualizarUICarrito(data.producto);
-            
             mostrarMensaje('Producto eliminado del carrito', 'exito');
         } else {
             mostrarMensaje('Error al eliminar el producto del carrito', 'error');
@@ -133,6 +127,65 @@ function iniciarBotonesProducto() {
             eliminarDelCarrito(idProducto);
         });
     });
+}
+
+function actualizarTotalCarrito(nuevoTotal) {
+    const totalElement = document.querySelector('.total-carrito span');
+    if (totalElement) {
+        totalElement.textContent = `$${nuevoTotal}`;
+    }
+}
+
+function actualizarCantidadCarrito(idProducto, cambio) {
+    console.log('Actualizando cantidad para producto:', idProducto, 'cambio:', cambio);
+    const itemProducto = document.querySelector(`.item-producto[data-product-id="${idProducto}"]`);
+    if (itemProducto) {
+        const cantidadElement = itemProducto.querySelector('.cantidad');
+        if (cantidadElement) {
+            fetch('/update_cart/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': obtenerCookie('csrftoken')
+                },
+                body: JSON.stringify({ product_id: idProducto, change: cambio })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Respuesta del servidor:', data);
+                if (data.success) {
+                    cantidadElement.textContent = data.new_quantity;
+                    actualizarTotalCarrito(data.new_total);
+                    actualizarUICarrito();
+                } else {
+                    console.error('Error en la respuesta del servidor:', data.error);
+                    mostrarMensaje('Error al actualizar la cantidad', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error al actualizar la cantidad:', error);
+                mostrarMensaje('Error al actualizar la cantidad', 'error');
+            });
+        }
+    }
+}
+
+document.querySelectorAll('.btn-cantidad').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const idProducto = this.dataset.productId;
+        const cambio = this.classList.contains('mas') ? 1 : -1;
+        actualizarCantidadCarrito(idProducto, cambio);
+    });
+});
+
+function actualizarStock(idProducto, nuevoStock) {
+    const productoElement = document.querySelector(`.item-producto[data-product-id="${idProducto}"]`);
+    if (productoElement) {
+        const stockElement = productoElement.querySelector('.stock');
+        if (stockElement) {
+            stockElement.textContent = `Stock: ${nuevoStock}`;
+        }
+    }
 }
 
 function iniciar() {

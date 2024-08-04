@@ -262,3 +262,33 @@ def get_cart_total(request):
         'iva': round(iva, 2),
         'total': round(total, 2)
     })
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+@require_POST
+def update_cart(request):
+    data = json.loads(request.body)
+    product_id = data.get('product_id')
+    change = data.get('change')
+    
+    carrito = request.session.get('carrito', {})
+    if product_id in carrito:
+        carrito[product_id] += change
+        if carrito[product_id] <= 0:
+            del carrito[product_id]
+    
+    request.session['carrito'] = carrito
+    
+    producto = Producto.objects.get(codigo=product_id)
+    producto.stock -= change
+    producto.save()
+    
+    return JsonResponse({
+        'success': True,
+        'new_stock': producto.stock,
+        'cart_count': sum(carrito.values())
+    })

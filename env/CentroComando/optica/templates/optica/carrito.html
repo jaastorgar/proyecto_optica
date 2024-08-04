@@ -51,16 +51,18 @@
                 {% if productos %}
                     <div class="lista-productos">
                         {% for producto in productos %}
-                        <div class="item-producto">
+                        <div class="item-producto" data-product-id="{{ producto.codigo }}">
                             <div class="imagen-contenedor">
                                 <img src="{{ producto.imagen.url }}" alt="{{ producto.armazon }}" class="imagen-producto">
                             </div>
                             <div class="detalles-producto">
                                 <h3 class="nombre-producto">{{ producto.armazon }}</h3>
                                 <p class="precio-producto">${{ producto.precio }}</p>
-                                <p class="cantidad-producto">
-                                    Cantidad: {{ request.session.carrito|get_item:producto.codigo }}
-                                </p>
+                            <div class="cantidad-producto">
+                                <button class="btn-cantidad menos" data-product-id="{{ producto.codigo }}">-</button>
+                                <span class="cantidad">{{ request.session.carrito|get_item:producto.codigo }}</span>
+                                <button class="btn-cantidad mas" data-product-id="{{ producto.codigo }}">+</button>
+                            </div>                                
                             </div>
                             <button class="btn-eliminar" data-product-id="{{ producto.codigo }}">
                                 <i class="fas fa-trash-alt"></i> Eliminar
