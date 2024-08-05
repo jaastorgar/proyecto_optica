@@ -41,7 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'optica',
     'rest_framework',
+    'channels',
 ]
+
+ASGI_APPLICATION = 'CentroComando.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

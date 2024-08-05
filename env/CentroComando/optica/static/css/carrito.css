@@ -106,6 +106,34 @@ body {
     margin: 10px auto;
 }
 
+.btn-cantidad.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#chat-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 300px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+#chat-log {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+#chat-message-input {
+    width: 80%;
+}
+
+#chat-message-submit {
+    width: 18%;
+}
+
 @media (max-width: 768px) {
     .item-producto {
         flex-basis: 100%;

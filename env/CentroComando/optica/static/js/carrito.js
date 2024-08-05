@@ -137,37 +137,48 @@ function actualizarTotalCarrito(nuevoTotal) {
 }
 
 function actualizarCantidadCarrito(idProducto, cambio) {
-    console.log('Actualizando cantidad para producto:', idProducto, 'cambio:', cambio);
-    const itemProducto = document.querySelector(`.item-producto[data-product-id="${idProducto}"]`);
-    if (itemProducto) {
-        const cantidadElement = itemProducto.querySelector('.cantidad');
-        if (cantidadElement) {
-            fetch('/update_cart/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': obtenerCookie('csrftoken')
-                },
-                body: JSON.stringify({ product_id: idProducto, change: cambio })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Respuesta del servidor:', data);
-                if (data.success) {
-                    cantidadElement.textContent = data.new_quantity;
-                    actualizarTotalCarrito(data.new_total);
-                    actualizarUICarrito();
-                } else {
-                    console.error('Error en la respuesta del servidor:', data.error);
-                    mostrarMensaje('Error al actualizar la cantidad', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error al actualizar la cantidad:', error);
-                mostrarMensaje('Error al actualizar la cantidad', 'error');
-            });
-        }
-    }
+    fetch(`/get_product_stock/${idProducto}/`)
+        .then(response => response.json())
+        .then(data => {
+            const stockActual = data.stock;
+            const itemProducto = document.querySelector(`.item-producto[data-product-id="${idProducto}"]`);
+            const cantidadElement = itemProducto.querySelector('.cantidad');
+            const botonMas = itemProducto.querySelector('.btn-cantidad.mas');
+            const botonMenos = itemProducto.querySelector('.btn-cantidad.menos');
+            let cantidadActual = parseInt(cantidadElement.textContent);
+
+            if ((cambio > 0 && cantidadActual < stockActual) || (cambio < 0 && cantidadActual > 1)) {
+                cantidadActual += cambio;
+                cantidadElement.textContent = cantidadActual;
+                botonMas.disabled = cantidadActual >= stockActual;
+                botonMenos.disabled = cantidadActual <= 1;
+
+                // Actualizar el carrito en el servidor
+                fetch('/update_cart/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': obtenerCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ product_id: idProducto, change: cambio })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        actualizarTotalCarrito(data.new_total);
+                        actualizarUICarrito();
+                    } else {
+                        mostrarMensaje(data.message || 'Error al actualizar la cantidad', 'error');
+                    }
+                });
+            } else {
+                mostrarMensaje('No se puede actualizar la cantidad', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error al obtener el stock:', error);
+            mostrarMensaje('Error al actualizar la cantidad', 'error');
+        });
 }
 
 document.querySelectorAll('.btn-cantidad').forEach(btn => {
@@ -194,3 +205,35 @@ function iniciar() {
 }
 
 document.addEventListener('DOMContentLoaded', iniciar);
+
+
+// Funcionalidad del chat
+const roomName = "carrito";
+const chatSocket = new WebSocket(
+    'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+);
+
+chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    document.querySelector('#chat-log').value += (data.message + '\n');
+};
+
+chatSocket.onclose = function(e) {
+    console.error('Chat socket cerrado inesperadamente');
+};
+
+document.querySelector('#chat-message-input').focus();
+document.querySelector('#chat-message-input').onkeyup = function(e) {
+    if (e.keyCode === 13) {  // Tecla Enter
+        document.querySelector('#chat-message-submit').click();
+    }
+};
+
+document.querySelector('#chat-message-submit').onclick = function(e) {
+    const messageInputDom = document.querySelector('#chat-message-input');
+    const message = messageInputDom.value;
+    chatSocket.send(JSON.stringify({
+        'message': message
+    }));
+    messageInputDom.value = '';
+};

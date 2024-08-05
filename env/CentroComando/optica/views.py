@@ -213,6 +213,7 @@ def detalle_producto(request, codigo):
         return JsonResponse({'error': 'Producto no encontrado'}, status=404)
 
 
+@csrf_exempt
 @api_view(['POST'])
 def remove_from_cart(request):
     product_id = request.data.get('product_id')
@@ -292,3 +293,13 @@ def update_cart(request):
         'new_stock': producto.stock,
         'cart_count': sum(carrito.values())
     })
+
+from django.http import JsonResponse
+from .models import Producto
+
+def get_product_stock(request, product_id):
+    try:
+        producto = Producto.objects.get(codigo=product_id)
+        return JsonResponse({'stock': producto.stock})
+    except Producto.DoesNotExist:
+        return JsonResponse({'error': 'Producto no encontrado'}, status=404)
