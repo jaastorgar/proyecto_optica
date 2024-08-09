@@ -1,0 +1,241 @@
+:root {
+    --color-primary: #66C166;
+    --color-secondary: #2E8B57;
+    --color-accent: #9E9E9E;
+    --color-white: #F5F5F5;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-white);
+    margin: 0;
+    padding: 0;
+}
+
+.main-header {
+    background-color: var(--color-primary);
+    padding: 10px 0;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo-container {
+    flex: 0 0 auto;
+}
+
+.logo {
+    max-height: 150px;
+    width: auto;
+}
+
+.site-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-white);
+    margin: 0;
+    font-size: 24px;
+}
+
+.main-nav {
+    flex: 0 0 auto;
+}
+
+.btn-primary {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    padding: 8px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-accent);
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.citas-title {
+    color: var(--color-secondary);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.filtros-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.filtro-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn-filtrar {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.tabs-container {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background-color: var(--color-accent);
+    color: white;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: var(--color-secondary);
+}
+
+.tab-content {
+    display: none;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.pagination a {
+    color: var(--color-secondary);
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+
+.pagination a:hover {
+    background-color: var(--color-accent);
+    color: white;
+}
+
+.citas-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cita-item {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.cita-contenido {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.cita-contenido:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.cita-contenido p {
+    margin: 10px 0;
+}
+
+.cita-contenido strong {
+    color: var(--color-secondary);
+}
+
+.btn.reprogramar-cita {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn.reprogramar-cita:hover {
+    background-color: var(--color-secondary);
+}
+
+@media (max-width: 768px) {
+    .filtro-form {
+        flex-direction: column;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .tabs-container {
+        flex-direction: column;
+    }
+
+    .tab {
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .citas-title {
+        font-size: 24px;
+    }
+
+    .pagination a {
+        padding: 5px 10px;
+    }
+}

@@ -210,30 +210,45 @@ document.addEventListener('DOMContentLoaded', iniciar);
 // Funcionalidad del chat
 const roomName = "carrito";
 const chatSocket = new WebSocket(
-    'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+    'ws://' + window.location.host + '/ws/chat/'
 );
 
 chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
-    document.querySelector('#chat-log').value += (data.message + '\n');
+    const chatLog = document.querySelector('#chat-log');
+    if (chatLog) {
+        chatLog.value += (data.message + '\n');
+    }
 };
 
 chatSocket.onclose = function(e) {
     console.error('Chat socket cerrado inesperadamente');
 };
 
-document.querySelector('#chat-message-input').focus();
-document.querySelector('#chat-message-input').onkeyup = function(e) {
-    if (e.keyCode === 13) {  // Tecla Enter
-        document.querySelector('#chat-message-submit').click();
-    }
-};
+document.addEventListener('DOMContentLoaded', function() {
+    const chatMessageInput = document.querySelector('#chat-message-input');
+    const chatMessageSubmit = document.querySelector('#chat-message-submit');
 
-document.querySelector('#chat-message-submit').onclick = function(e) {
-    const messageInputDom = document.querySelector('#chat-message-input');
-    const message = messageInputDom.value;
-    chatSocket.send(JSON.stringify({
-        'message': message
-    }));
-    messageInputDom.value = '';
-};
+    if (chatMessageInput) {
+        chatMessageInput.onkeyup = function(e) {
+            if (e.keyCode === 13) { // Tecla Enter
+                if (chatMessageSubmit) {
+                    chatMessageSubmit.click();
+                }
+            }
+        };
+    }
+
+    if (chatMessageSubmit) {
+        chatMessageSubmit.onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            if (messageInputDom) {
+                const message = messageInputDom.value;
+                chatSocket.send(JSON.stringify({
+                    'message': message
+                }));
+                messageInputDom.value = '';
+            }
+        };
+    }
+});

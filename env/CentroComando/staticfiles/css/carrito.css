@@ -1,0 +1,166 @@
+:root {
+    --color-primary: #66C166;
+    --color-secondary: #2E8B57;
+    --color-accent: #9E9E9E;
+    --color-white: #F5F5F5;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-white);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor-carrito {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.carrito-centrado {
+    max-width: 1000px;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.titulo-carrito {
+    text-align: center;
+    color: var(--color-secondary);
+}
+
+.lista-productos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.item-producto {
+    flex-basis: calc(50% - 10px);
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.imagen-producto {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.detalles-producto {
+    flex-grow: 1;
+}
+
+.btn-eliminar {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-eliminar:hover {
+    background-color: #ff3333;
+}
+
+.resumen-pedido {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.btn-pagar {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--color-primary);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+.carrito-vacio {
+    text-align: center;
+    padding: 20px;
+}
+
+.carrito-vacio i,
+.carrito-vacio p,
+.carrito-vacio a {
+    display: block;
+    margin: 10px auto;
+}
+
+.btn-cantidad.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#chat-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 300px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+#chat-log {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+#chat-message-input {
+    width: 80%;
+}
+
+#chat-message-submit {
+    width: 18%;
+}
+
+@media (max-width: 768px) {
+    .item-producto {
+        flex-basis: 100%;
+    }
+    
+    .imagen-producto {
+        max-width: 80px;
+        max-height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carrito-centrado {
+        padding: 10px;
+    }
+    
+    .item-producto {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .imagen-producto {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .btn-eliminar {
+        margin-top: 10px;
+    }
+}

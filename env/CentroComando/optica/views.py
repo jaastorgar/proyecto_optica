@@ -14,6 +14,9 @@ from django.core.paginator import Paginator
 from .serializer import CitaSerializer, ProductoSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.urls import reverse_lazy
+
+LOGIN_URL = reverse_lazy('login')
 
 # Create your views here.
 def home(request):

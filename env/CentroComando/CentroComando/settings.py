@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-(^g!flkeq^wjlsmz17^%4d-@j78#d85rx8ancc(3gqj_vq7eth
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.18.251']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'optica',
     'rest_framework',
     'channels',
+    'chat_panel',
+    'corsheaders',
 ]
 
 ASGI_APPLICATION = 'CentroComando.asgi.application'
@@ -61,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'CentroComando.urls'
@@ -72,6 +75,15 @@ LOGIN_URL = 'login'  # Nombre de la URL de inicio de sesión
 LOGIN_REDIRECT_URL = 'home'  # URL a la que se redirige después de iniciar sesión
 
 LOGOUT_REDIRECT_URL = 'home'  # URL a la que se redirige después de cerrar sesión
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -145,6 +157,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

@@ -77,11 +77,14 @@
                             <p>IVA (19%): <span>${{ iva }}</span></p>
                             <p class="total-carrito">Total: <span>${{ total }}</span></p>
                         </div>
-                        <div id="chat-container">
-                            <div id="chat-log"></div>
-                            <input type="text" id="chat-message-input" autocomplete="off">
-                            <button id="chat-message-submit">Enviar</button>
-                        </div>
+                        <div id="chat-widget">
+                            <button id="chat-toggle">Chat</button>
+                            <div id="chat-container" style="display: none;">
+                                <div id="chat-messages"></div>
+                                <input type="text" id="chat-input" placeholder="Escribe un mensaje...">
+                                <button id="chat-send">Enviar</button>
+                            </div>
+                        </div>                        
                         <a href="{% url 'checkout' %}" class="btn-pagar">Proceder al Pago</a>
                     </div>
                 {% else %}
@@ -95,6 +98,7 @@
         </div>    
     </main>
     <script src="{% static 'js/carrito.js' %}"></script>
+    <script src="{% static 'js/chat_widget.js' %}"></script>
     <footer>
         <p>&copy; 2024 Mitiz Vision. Todos los derechos reservados.</p>
     </footer>

@@ -1,0 +1,98 @@
+:root {
+    --color-primary: #66C166;
+    --color-secondary: #2E8B57;
+    --color-accent: #9E9E9E;
+    --color-white: #F5F5F5;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-white);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.reprogramar-cita-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 30px;
+}
+
+h2 {
+    color: var(--color-secondary);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.reprogramar-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--color-secondary);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.btn-reprogramar {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-reprogramar:hover {
+    background-color: var(--color-secondary);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .reprogramar-cita-container {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 24px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .btn-reprogramar {
+        font-size: 14px;
+    }
+}

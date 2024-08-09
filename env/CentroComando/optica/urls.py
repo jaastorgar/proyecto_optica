@@ -27,5 +27,5 @@ urlpatterns = [
     path('reprogramar_cita/<int:cita_id>/', reprogramar_cita, name='reprogramar_cita'),
     path('get_cart_total/', get_cart_total, name='get_cart_total'),
     path('update_cart/', update_cart, name='update_cart'),
-    path('get_product_stock/<str:product_id>/', get_product_stock, name='get_product_stock'),
+    path('get_product_stock/<str:product_id>/', get_product_stock, name='get_product_stock')
 ]

@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control de Chats - MatizVision</title>
+    <link rel="stylesheet" href="{% static 'css/chat_panel.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Panel de Control de Chats - MatizVision</h1>
+        <div id="user-info">
+            <span>Bienvenido, {{ user.username }}</span>
+            <a href="{% url 'logout' %}">Cerrar sesión</a>
+        </div>
+    </header>
+    <main>
+        <div id="chat-header">
+            <h2 id="current-chat-title">Selecciona un chat</h2>
+            <div id="chat-assignment">
+                <select id="optician-select">
+                    <!-- Las opciones se cargarán dinámicamente con JavaScript -->
+                </select>
+                <button id="assign-chat-btn">Asignar Chat</button>
+            </div>
+            <button id="close-chat-btn" style="display: none;">Cerrar Chat</button>
+        </div>        
+        <div id="chat-panel">
+            <div id="chat-list-container">
+                <h2>Chats Activos</h2>
+                <input type="text" id="chat-search" placeholder="Buscar chat...">
+                <ul id="chat-list">
+                    <!-- Los chats se cargarán dinámicamente aquí -->
+                </ul>
+                <button id="new-chat-btn">Nuevo Chat</button>
+            </div>
+            <div id="chat-messages">
+                <div id="chat-header">
+                    <h2 id="current-chat-title">Selecciona un chat</h2>
+                    <button id="close-chat-btn" style="display: none;">Cerrar Chat</button>
+                </div>
+                <div id="message-container">
+                    <!-- Los mensajes del chat seleccionado se mostrarán aquí -->
+                </div>
+                <div id="message-input">
+                    <input type="text" id="chat-input" placeholder="Escribe un mensaje...">
+                    <button id="send-message">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="notification-container"></div>
+    <script src="{% static 'js/chat_panel.js' %}"></script>
+</body>
+</html>
